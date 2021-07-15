@@ -51,7 +51,9 @@
                 ex.eval(action.action,{head:action})
             },
             is_active:function(action){
-                if (action.url == location.pathname){
+                if(this.activeName){
+                    return action.name==this.activeName
+                }else if (action.url == location.pathname){
                     return true
                 }else{
                     return false

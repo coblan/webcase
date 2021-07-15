@@ -1,21 +1,24 @@
 <template>
     <div>
         <div class="action-panel">
-            <div class="action" :class="{active:activeName == act.name}"
+            <div class="action" :class="{active:value == act.name}"
                 @click="on_click(act)" v-for="act in items" :key='act.name'>
-                <span v-text="act.label"></span>
+                <span>{{act.label}}</span>
             </div>
         </div>
 
     </div>
 </template>
 <script>
+/*
+@items:[{name:'xxx',label:'xxx'}]
+ */
     export default {
         props:{
             items:{
                 default:()=>[]
             },
-            activeName:{},
+            value:{},
         },
         // props:['ctx'],
         data(){
@@ -31,7 +34,8 @@
         },
         methods:{
             on_click(act){
-                this.$emit('update:activeName',act.name)
+                // this.$emit('update:activeName',act.name)
+                this.$emit('input',act.name)
                 // this.crt_label = act.label
                 if(act.click_express){
                     ex.eval(act.click_express,{vc:this})

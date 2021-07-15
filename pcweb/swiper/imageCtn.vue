@@ -6,6 +6,18 @@
     </div>
 </template>
 <script>
+/* 图片div。
+
+1. 默认css样式:background:cover，控制图片显示
+2. 可以传入label，显示在图片左下角
+
+现在主要用在fadeSwiper和mySwiper中
+
+默认样式可以用在fadeSwiper中。
+
+.fix-height 类，控制高度与外部容器高度一致，两边自由伸缩。可以用在mySwiper控件中
+
+*/
     export default{
         props:{
             label:{},
@@ -23,14 +35,6 @@
             on_click(){
                 ex.eval(this.clickExpress,{vc:this})
             }
-            // on_click(){
-            //     if(this.ctx.click_express){
-            //         ex.eval(this.ctx.click_express,{vc:this})
-            //     }
-            // },
-            // get_link(){
-            //     return ex.eval(this.ctx.link_express,{vc:this})
-            // }
         },
         computed:{
             mystyle(){
@@ -50,6 +54,7 @@
 .image-ctn{
     position: relative;
     background-size: cover;
+    background-position:center;
 }
 .for-click{
     /*background-color: red;*/
@@ -69,5 +74,14 @@
     position: absolute;
     bottom: 30px;
     left: 0;
+}
+
+/*
+固定高度，图片两边延伸
+ */
+.image-ctn.fix-height{
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    
 }
 </style>

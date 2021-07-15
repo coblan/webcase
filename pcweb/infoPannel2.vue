@@ -3,7 +3,7 @@
         <div v-for='item in items' :key="item.name" class="info-item" :class='itemClass'>
             <div class="image-content"   @mouseover="on_enter(item.name)" @mouseout="on_leave(item.name)">
                 <!-- <div class="image-panel" :style="mystyle"></div> -->
-                <imageDiv :name='item.name' class="image-panel" :image-url='item.image_url'></imageDiv>   
+                <imageDiv :name='item.name' class="image-panel" :src='item.image_url'></imageDiv>   
             </div>
 
             <div class="text-content">
