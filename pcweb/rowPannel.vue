@@ -12,19 +12,23 @@
             <slot>
 
             </slot>    
-            <!-- <div class="content web-wrap">
-                <div class="item" v-for="item in items">
-                    <img :src="item.cover" alt="">
-                    <div class="item-title" v-text="item.title"></div>
-                    <div class='html' v-html="item.content"></div>
-                </div>
-
-            </div> -->
 
         </div>
     </div>
 </template>
 <script>
+/*
+页面的行容器，有title和subtitle
+innClass 一般用来控制内容的宽度，用在顶层页面width=1100px，两边自动延伸
+
+        <rowPannel innClass='web-wrap'
+            class='about-us-row'
+            title='关于我们'
+            sub-title='ABOUT US'>
+            <div class="about-us" v-html='ctx.about_us'></div>
+        </rowPannel>
+
+ */
 export default {
     props:{
         title:{},

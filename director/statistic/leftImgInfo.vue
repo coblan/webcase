@@ -14,6 +14,11 @@
     </div>
 </template>
 <script>
+/*首页信息展示panel。
+
+传入的参数:
+  {'type':'warning','title':'取袋次数','info':order_number,'fa':'shopping-bag','name':'order_number'},
+* */
 
 export default {
    props:{

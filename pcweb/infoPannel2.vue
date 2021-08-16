@@ -35,10 +35,6 @@ export default {
     },
     methods:{
         on_enter(name){
-            // var Velocity = $.Velocity
-            // Velocity( this.$el.querySelector('[name='+name+']')).velocity('stop')
-            // this.$el.querySelector('[name='+name+']').velocity('stop')
-            // $(this.$el).find('[name='+name+']').velocity('stop')
             $( this.$el.querySelector('[name='+name+']')).velocity('stop')
                 .velocity({
                 scaleX:1.1,

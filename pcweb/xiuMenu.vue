@@ -24,6 +24,10 @@
 
 </template>
 <script>
+/*
+
+* */
+import ex from 'webcase/director/exfun/main.js'
 
     export default {
         props:{
@@ -51,13 +55,12 @@
                 ex.eval(action.action,{head:action})
             },
             is_active:function(action){
-                if(this.activeName){
+                  if(this.activeName){
                     return action.name==this.activeName
-                }else if (action.url == location.pathname){
-                    return true
-                }else{
+                  }else{
                     return false
-                }
+                  }
+
             },
         }
     }
@@ -74,8 +77,9 @@
   z-index 100
   top: 0;
   left: 0;
-  border-bottom 1px solid #ececec
-  width var(--app-width)
+  border-bottom 1px solid #ececec;
+  width:100%;
+  //width var(--app-width)
 
   .web-wrap
     display flex

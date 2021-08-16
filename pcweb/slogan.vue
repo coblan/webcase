@@ -8,6 +8,9 @@
     </div>
 </template>
 <script>
+/*
+口号控件，特点是文字隔得比较远。
+* */
 export default {
     props:{
         title:{

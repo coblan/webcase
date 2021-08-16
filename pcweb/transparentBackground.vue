@@ -4,17 +4,13 @@
         <slot>
 
         </slot>
-        <!-- <div class = 'web-wrap'>
-            <div v-if="ctx.title" class="title" v-text="ctx.title"> </div>
-            <div v-if="ctx.subtitle" class="subtitle" v-text="ctx.subtitle"></div>
-            <div class="block-content">
-            <component v-for="item in ctx.items" :is="item.editor" :ctx="item"></component>
-            </div>
-        </div> -->
     </div>
   
 </template>
 <script>
+/*
+* 让imageUrl作为背景，前景是镂空样式。
+* */
 export default {
     props:{
         imageUrl:{

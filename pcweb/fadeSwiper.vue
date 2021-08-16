@@ -36,101 +36,106 @@
 <script>
 import imageCtn from './swiper/imageCtn.vue'
 import cdn from '../cdn.js'
-const { ref, reactive,computed ,onMounted,getCurrentInstance } = VueCompositionAPI
+// if(process.client){
+//    var { ref, reactive,computed ,onMounted,getCurrentInstance } = VueCompositionAPI
+// }
+
+import { ref, reactive,computed ,onMounted,getCurrentInstance } from '@vue/composition-api'
+import Vue from "vue";
 
 export class FadeSwiperLogic{
-    constructor(){
-        this.activeIndex = ref(0)
-        this.vc = getCurrentInstance()
-        this.effect = 'fade'
-        this.is_manual = false
+  constructor(){
+    if(process.client){
+
+      this.activeIndex = ref(0)
+      this.vc = getCurrentInstance()
     }
-    async init(props){
-        ex.load_css(cdn.swiper_css)
-        await ex.load_js(cdn.swiper_js)
-        var element = this.vc.vnode.elm
-        var self =this
-        var swiper = new Swiper(element.querySelector('.swiper-container'), {
-            spaceBetween: 30,
-            effect: this.effect, //'fade',
-            loop: true,
-            autoplay: {
-                delay: props.delay ,
-                disableOnInteraction: false,
-            },
+    this.effect = 'fade'
+    this.is_manual = false
+  }
+  async init(props){
+    ex.load_css(cdn.swiper_css)
+    await ex.load_js(cdn.swiper_js)
+    var element = this.vc.vnode.elm
+    var self =this
+    var swiper = new Swiper(element.querySelector('.swiper-container'), {
+      spaceBetween: 30,
+      effect: this.effect, //'fade',
+      loop: true,
+      autoplay: {
+        delay: props.delay ,
+        disableOnInteraction: false,
+      },
 
-            pagination: {
-                el: element.querySelector('.swiper-pagination'),
-                clickable: true,
-            },
-            navigation: {
-                nextEl: element.querySelector('.swiper-button-next'),
-                prevEl: element.querySelector('.swiper-button-prev'),
-            },
-            on:{
-                transitionStart: function(){
-                    var crt = this.activeIndex -1
-                    if(crt<0){
-                        self.activeIndex.value = items.length
-                    }else{
-                        self.activeIndex.value = ( crt ) % props.items.length
-                    }
-                    
-                },
-                transitionEnd: function(){
+      pagination: {
+        el: element.querySelector('.swiper-pagination'),
+        clickable: true,
+      },
+      navigation: {
+        nextEl: element.querySelector('.swiper-button-next'),
+        prevEl: element.querySelector('.swiper-button-prev'),
+      },
+      on:{
+        transitionStart: function(){
+          var crt = this.activeIndex -1
+          if(crt<0){
+            self.activeIndex.value = props.items.length
+          }else{
+            self.activeIndex.value = ( crt ) % props.items.length
+          }
 
-                },
-                  click: function(){
-                    // alert('你点了Swiper');
-                    self.is_manual=true
-                     setTimeout(()=>{
-                         self.is_manual = false
-                    },100)
-                    
-                },
-                 touchStart: function(swiper,event){
-                     self.is_manual = true
-                     
-                },
-                touchEnd: function(swiper,event){
-                    setTimeout(()=>{
-                         self.is_manual = false
-                    },100)
-                //你的事件
-                },
-                slideChange: function(){
-                    if(self.is_manual){
-                        swiper.autoplay.stop();
-                        console.log('暂定')
-                    }
-                // alert('改变了，activeIndex为'+this.activeIndex);
-                },
-                //    slideChange: function(swiper){
-                //        debugger
-                // alert('改变了，activeIndex为'+this.activeIndex);
-                // },
-                    
-            },
-        });
+        },
+        transitionEnd: function(){
 
-        // //鼠标覆盖停止自动切换
-        // swiper.el.onmouseover = function(){
-        // swiper.autoplay.stop();
-        // }
+        },
+        click: function(){
+          // alert('你点了Swiper');
+          self.is_manual=true
+          setTimeout(()=>{
+            self.is_manual = false
+          },100)
 
+        },
+        touchStart: function(swiper,event){
+          self.is_manual = true
 
-    }
-    getSetup(props){
-        onMounted(()=>{
-              Vue.nextTick(()=>{
-                this.init(props)
-            })
+        },
+        touchEnd: function(swiper,event){
+          setTimeout(()=>{
+            self.is_manual = false
+          },100)
+          //你的事件
+        },
+        slideChange: function(){
+          if(self.is_manual){
+            swiper.autoplay.stop();
+            console.log('暂定')
+          }
+          // alert('改变了，activeIndex为'+this.activeIndex);
+        },
+        //    slideChange: function(swiper){
+        //        debugger
+        // alert('改变了，activeIndex为'+this.activeIndex);
+        // },
+
+      },
+    });
+  }
+  getSetup(props){
+    if(process.client){
+      onMounted(()=>{
+        Vue.nextTick(()=>{
+          this.init(props)
         })
-        return {
-            activeIndex:this.activeIndex,
-        }
+      })
     }
+
+    return {
+      activeIndex:this.activeIndex,
+    }
+  }
 }
+
 
 export default {
     /**
