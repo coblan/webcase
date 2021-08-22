@@ -48,6 +48,8 @@ export default {
         transition: all .5s ease;
         .html{
             text-align: left;
+            font-size: 80%;
+          color: #6b6b6b;
         }
         &:hover{
             background-color: rgb(226, 243, 250);
