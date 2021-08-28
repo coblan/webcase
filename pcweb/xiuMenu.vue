@@ -25,6 +25,8 @@
 </template>
 <script>
 /*
+增加dark样式
+class="dark"
 
 * */
 import ex from 'webcase/director/exfun/main.js'
@@ -123,17 +125,22 @@ import ex from 'webcase/director/exfun/main.js'
 
 <style scoped lang="scss">
 .dark{
+
     .stand{
         height: 50px;
+
     }
     .fixed-xiu-menu{
         background-color: #303030;
         border-bottom:none;
         line-height:50px;
         height: 50px;
+      //line-height:66px;  // 黑色的情况下，高度太大，感觉不太和谐
+      //height: 66px;
         .menu{
             .action{
                 font-size:14px;
+                //font-size:20px;
                 a{
                     color:#b4b4b4;
                     &:hover,&.active{
