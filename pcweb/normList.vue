@@ -1,5 +1,6 @@
 <template>
     <div class="norm-list">
+
         <div v-if="rows.length!=0" class="list-rows">
             <slot name='rows' :rows='rows'>
 
@@ -20,9 +21,8 @@
                 :total="row_pages.total">
             </el-pagination>
         </slot>
-        
-         
-        
+
+      <modalLoading v-show="is_loading"></modalLoading>
     </div>
 </template>
 
@@ -30,40 +30,36 @@
 import Vue from 'vue';
 import { Pagination } from 'element-ui';
 Vue.use(Pagination)
-import 'element-ui/lib/theme-chalk/index.css';
-
-export class  DirectorListLogic{
-    constructor() {
-    }
-    setup(vc){
-      this.vc=vc
-    }
-    getPostData(){
-      var page = {_page:this.vc.row_pages.crt_page, _perpage:this.vc.row_pages.perpage,}
-          Object.assign(page,this.vc.search_args)
-        return page
-    }
-    fetch_rows(){
-      console.log('请overwrite fetch_rows 函数')
-    }
-    async get_rows(){
-
-        var postdata=this.getPostData()
-        cfg.show_load()
-        var {rows,row_pages} = await this.fetch_rows()
-        cfg.hide_load()
-        this.vc.rows= rows
-        ex.vueAssign(this.vc.row_pages,row_pages)
-        // return ex.director_call(this.director_name,postdata).then((resp)=>{
-        //     cfg.hide_load()
-        //     this.rows.value = resp.rows
-        //     ex.vueAssign(this.row_pages,resp.row_pages)
-        // })
-    }
-}
+import 'element-ui/lib/theme-chalk/index.css'
+import modalLoading from 'webcase/lit/modalLoading.vue'
+// export class  DirectorListLogic{
+//     constructor() {
+//     }
+//     setup(vc){
+//       this.vc=vc
+//     }
+//     getPostData(){
+//       var page = {_page:this.vc.row_pages.crt_page, _perpage:this.vc.row_pages.perpage,}
+//           Object.assign(page,this.vc.search_args)
+//         return page
+//     }
+//     fetch_rows(){
+//       console.log('请overwrite fetch_rows 函数')
+//     }
+//     async get_rows(){
+//
+//         var postdata=this.getPostData()
+//         cfg.show_load()
+//         var {rows,row_pages} = await this.fetch_rows()
+//         cfg.hide_load()
+//         this.vc.rows= rows
+//         ex.vueAssign(this.vc.row_pages,row_pages)
+//     }
+// }
 
 export default {
     components:{
+      modalLoading,
       // Pagination
     },
     props:{
@@ -80,53 +76,74 @@ export default {
                 }
           }
         },
-        rowLogic:{
-          default(){
-            return new DirectorListLogic()
-          }
-        }
+        fetchRows:{
+          // 获取rows的函数，由外部传入
+        },
+        // rowLogic:{
+        //   default(){
+        //     return new DirectorListLogic()
+        //   }
+        // }
     },
     data(){
         return {
           rows:this.initRows ,
           row_pages: this.rowPages ,
-          search_args:{}
+          search_args:{},
+          is_loading:false,
         }
     },
     mounted(){
 
-      this.rowLogic.setup(this)
+      // this.rowLogic.setup(this)
     },
-    // setup(props){
-    //     if(props.extendLogic){
-    //         return props.extendLogic.getSetup(props)
-    //     }
-    // },
-        methods:{
-            get_item_ctx(head,row){
-                var dc={}
-                ex.vueAssign(dc,head)
-                dc.row=row
-                return dc
-                
-            },
-             async search(){
-                this.row_pages.crt_page =1
-                await this.rowLogic.get_rows()
-                // return this.get_rows()
-            },
-            handleSizeChange(val){
-                this.row_pages.perpage=val
-                cfg.show_load()
-                this.search().then(()=>{
-                    cfg.hide_load()
-                })
-            },
-            handleCurrentChange(){
+    methods:{
+        get_item_ctx(head,row){
+            var dc={}
+            ex.vueAssign(dc,head)
+            dc.row=row
+            return dc
 
-            },
-           
-            
+        },
+         async search(){
+            this.row_pages.crt_page =1
+            await this.get_rows()
+            // return this.get_rows()
+        },
+        handleSizeChange(val){
+            this.row_pages.perpage=val
+            cfg.show_load()
+            this.search().then(()=>{
+                cfg.hide_load()
+            })
+        },
+        handleCurrentChange(){
+
+        },
+      getPostData(){
+        var page = {_page:this.row_pages.crt_page, _perpage:this.row_pages.perpage,}
+        Object.assign(page,this.search_args)
+        return page
+      },
+      // fetch_rows(){
+      //   console.log('请overwrite fetch_rows 函数')
+      // },
+      async get_rows(){
+        var postdata=this.getPostData()
+        // cfg.show_load()
+        this.is_loading=true
+        var {rows,row_pages} = await  this.fetchRows() // this.fetch_rows()
+        // cfg.hide_load()
+        this.is_loading=false
+        this.rows= rows
+        ex.vueAssign(this.row_pages,row_pages)
+      },
+
     }
 }
 </script>
+<style scoped lang="scss">
+.norm-list{
+  position: relative;
+}
+</style>
