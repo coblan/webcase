@@ -32,30 +32,10 @@ import { Pagination } from 'element-ui';
 Vue.use(Pagination)
 import 'element-ui/lib/theme-chalk/index.css'
 import modalLoading from 'webcase/lit/modalLoading.vue'
-// export class  DirectorListLogic{
-//     constructor() {
-//     }
-//     setup(vc){
-//       this.vc=vc
-//     }
-//     getPostData(){
-//       var page = {_page:this.vc.row_pages.crt_page, _perpage:this.vc.row_pages.perpage,}
-//           Object.assign(page,this.vc.search_args)
-//         return page
-//     }
-//     fetch_rows(){
-//       console.log('请overwrite fetch_rows 函数')
-//     }
-//     async get_rows(){
-//
-//         var postdata=this.getPostData()
-//         cfg.show_load()
-//         var {rows,row_pages} = await this.fetch_rows()
-//         cfg.hide_load()
-//         this.vc.rows= rows
-//         ex.vueAssign(this.vc.row_pages,row_pages)
-//     }
-// }
+
+/*
+*
+* */
 
 export default {
     components:{
@@ -112,9 +92,11 @@ export default {
         },
         handleSizeChange(val){
             this.row_pages.perpage=val
-            cfg.show_load()
+            // cfg.show_load()
+            this.is_loading=true
             this.search().then(()=>{
-                cfg.hide_load()
+              this.is_loading =false
+                // cfg.hide_load()
             })
         },
         handleCurrentChange(){
