@@ -1,5 +1,5 @@
 <template>
-    <echartStaticBase  :option="option"></echartStaticBase>  
+    <echartStaticBase  :option="my_option"></echartStaticBase>
 
 </template>
 <script>
@@ -15,7 +15,8 @@ import echartStaticBase from './echartStaticBase.vue'
             type:{
                 default:()=>'line'
             },
-            title:{}
+            title:{},
+          option:{},
         },
         data(){
             return {
@@ -23,28 +24,38 @@ import echartStaticBase from './echartStaticBase.vue'
             }
         },
         computed:{
-            option(){
-                return  {
-                    title: {
-                        text: this.title
-                    },
-                    tooltip: {
-                      trigger: 'item'
-                    },
-                    xAxis: {
-                        type: 'category',
-                        data: this.x,
-                    },
-                    yAxis: {
-                        type: 'value'
-                    },
-                    series: [
-                        {
-                        data: this.y,
-                        type: this.type
-                        }
-                    ]
+            my_option(){
+                let myoptions =  {
+                      title: {
+                          text: this.title
+                      },
+                      tooltip: {
+                        trigger: 'item'
+                      },
+                      xAxis: {
+                          type: 'category',
+                          data: this.x,
+                      },
+                      yAxis: {
+                          type: 'value'
+                      },
+                      series: [
+                          {
+                          data: this.y,
+                          type: this.type
+                          }
+                      ]
                     }
+              if(this.option){
+                for(var k in this.option){
+                  if(myoptions[k]){
+                    Object.assign(myoptions[k],this.option[k])
+                  }else{
+                    myoptions[k] = this.option[k]
+                  }
+                }
+              }
+              return myoptions
             }
         },
    
