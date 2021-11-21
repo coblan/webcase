@@ -37,19 +37,19 @@
 import imageCtn from './swiper/imageCtn.vue'
 import cdn from '../cdn.js'
 // if(process.client){
-//    var { ref, reactive,computed ,onMounted,getCurrentInstance } = VueCompositionAPI
+   var { ref, reactive,computed ,onMounted,getCurrentInstance } = VueCompositionAPI
 // }
 
-import { ref, reactive,computed ,onMounted,getCurrentInstance } from '@vue/composition-api'
+// import { ref, reactive,computed ,onMounted,getCurrentInstance } from '@vue/composition-api'
 import Vue from "vue";
 
 export class FadeSwiperLogic{
   constructor(){
-    if(process.client){
+    // if(process.client){
 
       this.activeIndex = ref(0)
       this.vc = getCurrentInstance()
-    }
+    // }
     this.effect = 'fade'
     this.is_manual = false
   }
@@ -122,13 +122,13 @@ export class FadeSwiperLogic{
     });
   }
   getSetup(props){
-    if(process.client){
+    // if(process.client){
       onMounted(()=>{
         Vue.nextTick(()=>{
           this.init(props)
         })
       })
-    }
+    // }
 
     return {
       activeIndex:this.activeIndex,
