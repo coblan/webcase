@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Leaflet sample</title>
+      <!-- <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/> -->
+      <!-- <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script> -->
+      <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet-src.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css">
+   </head>
+   <body>
+      <div id = "map" style = "width: 100vw; height: 100vh"></div>
+      <script>
+         // Creating map options
+         var mapOptions = {
+            crs: L.CRS.Simple,
+            center: [0, 0],
+            // center:[29.345319,106.526541],
+            zoom: 1,
+            maxZoom: 4, //最大视图
+            minZoom: 1, //最小视图
+            // zoomControl: false
+         }
+         // Creating a map object
+         var map = new L.map('map', mapOptions);
+         // Creating a Layer object
+        //  var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+         // var layer = new L.TileLayer('tile3/{z}/{z}{y}/{z}{y}{x}.png');
+
+         function gety(y,z){
+            if(z==1){
+               var ry = y+4
+            }
+            if(z==2){
+               var ry = y+8
+            }
+            if(z==3){
+               var ry = y+16
+            }
+            if(z==4){
+               var ry = y+32
+            }
+            return ry
+         }
+         function trans(y,z){
+            if(z==1){
+               var ry = y+4/2 +1
+            }
+            if(z==2){
+               var ry = y+8/2 +1
+            }
+            if(z==3){
+               var ry = y+16/2 +1
+            }
+            if(z==4){
+               var ry = y+32/2 +1
+            }
+            return ry
+         }
+         L.TileLayer.Kitten = L.TileLayer.extend({
+               getTileUrl: function(coords) {
+                  // var i = Math.ceil( Math.random() * 4 );
+                  var z = coords.z
+                 var y = trans(coords.y,z)// gety(coords.y,coords.z)
+                  
+                  var x = trans(coords.x,z) 
+                  
+                  console.log(x,y,z)
+                  return `tile3/${z}/${z}${y}/${z}${y}${x}.png?v=1`
+               },
+               getAttribution: function() {
+                  return "<a href='https://placekitten.com/attribution.html'>PlaceKitten</a>"
+               }
+            });
+
+            L.tileLayer.kitten = function() {
+               return new L.TileLayer.Kitten();
+            }
+
+         var layer =   L.tileLayer.kitten()
+         map.addLayer(layer);
+
+         // L.control.zoom({
+         //    position: 'bottomright'
+         // }).addTo(map);
+
+         // L.GridLayer.DebugCoords = L.GridLayer.extend({
+         //       createTile: function (coords) {
+         //          var tile = document.createElement('div');
+         //          var y =  gety(coords.y,coords.z)
+         //          tile.innerHTML = [coords.x,coords.y, coords.z].join(', ');
+         //          tile.style.outline = '1px solid red';
+         //          return tile;
+         //       }
+         //    });
+
+         //  L.gridLayer.debugCoords = function(opts) {
+         //       return new L.GridLayer.DebugCoords(opts);
+         // };
+
+         // map.addLayer(L.gridLayer.debugCoords());
+      </script>
+   </body>
+</html>
