@@ -24,6 +24,18 @@
          var layer = new L.TileLayer('/Tile/{z}/{x}/{y}.png');
          // Adding layer to the map
          map.addLayer(layer);
+
+         var popup = L.popup();
+
+         function onMapClick(e) {
+            popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(map);
+         }
+
+         map.on('click', onMapClick);
+
       </script>
    </body>
 </html>

@@ -1,5 +1,6 @@
 <template>
-    <div class="d-table com-table-rows com-table-grid" >
+<!-- com-table-rows com-table-grid -->
+    <div class="d-table" >
         <el-table class="table flat-head flex-v" ref="e_table"
                               :data="rows"
                                border
@@ -286,7 +287,7 @@ export default {
         on_header_dragend(newWidth, oldWidth, column, event){
               if(this.advise_heads.length >0){
                 var key = '_table_settings_'+ this.directorName
-                var setting_str = localStorage.getItem(key)
+                var setting_str = localStorage.getItem(key) || '{}'
                 var setting_obj = JSON.parse(setting_str)
                 setting_obj.advise_width = setting_obj.advise_width || {}
                 setting_obj.advise_width[column.property] = newWidth

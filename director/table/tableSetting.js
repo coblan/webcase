@@ -6,13 +6,13 @@ export class TableSetting{
     }
     loadSetting(){
         // debugger
-      
         var setting_str = localStorage.getItem(this.key)
         if(setting_str){
             var setting_obj = JSON.parse(setting_str)
             // setting_obj.advise_heads = ex.arrayIntersection(this.advise_heads,setting_obj.advise_heads)
             setting_obj.advise_width  = setting_obj.advise_width || {}
             setting_obj.advise_order = setting_obj.advise_order || []
+            setting_obj.advise_heads = setting_obj.advise_heads || this.table.adviseHeads
         }
         else{
             var setting_obj ={
