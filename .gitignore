@@ -20,3 +20,4 @@ yarn-error.log*
 *.sln
 *.sw*
 /example/leaflet/Tile
+/example/leaflet/tile3
