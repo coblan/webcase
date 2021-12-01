@@ -128,9 +128,14 @@
 
 
             map.on(L.Draw.Event.CREATED, function (e) {
-               debugger
-             var  aa = e.layer.toGeoJSON()
-             var cord = aa.geometry.coordinates
+               if(window.draw_hand){
+                  window.draw_hand(e)
+               }else{
+                  alert('没有对接函数')
+               }
+              
+            //  var  aa = e.layer.toGeoJSON()
+            //  var cord = aa.geometry.coordinates
 
           
 
