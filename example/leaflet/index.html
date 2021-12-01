@@ -156,6 +156,16 @@
             }
          })
 
+// 添加路径
+// create a red polyline from an array of LatLng points
+var latlngs = [
+    [45.51, -122.68],
+    [37.77, -122.43],
+    [34.04, -118.2]
+];
+
+var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+
       </script>
    </body>
 </html>
