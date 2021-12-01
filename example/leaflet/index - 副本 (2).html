@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Leaflet sample</title>
+      <!-- <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/> -->
+      <!-- <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script> -->
+      <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet-src.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css">
+   </head>
+   <body>
+      <div id = "map" style = "width: 100vw; height: 100vh"></div>
+      <script>
+         // Creating map options
+         var mapOptions = {
+            crs: L.CRS.Simple,
+            center: [0, 0],
+            // center:[29.345319,106.526541],
+            zoom: 1,
+            maxZoom: 4, //最大视图
+            minZoom: 1, //最小视图
+            // zoomControl: false
+         }
+         // Creating a map object
+         var map = new L.map('map', mapOptions);
+         // Creating a Layer object
+        //  var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+         // var layer = new L.TileLayer('tile3/{z}/{z}{y}/{z}{y}{x}.png');
+
+         function gety(y,z){
+            if(z==1){
+               var ry = y+4
+            }
+            if(z==2){
+               var ry = y+8
+            }
+            if(z==3){
+               var ry = y+16
+            }
+            if(z==4){
+               var ry = y+32
+            }
+            return ry
+         }
+         function trans(y,z){
+            if(z==1){
+               var ry = y+4/2 +1
+            }
+            if(z==2){
+               var ry = y+8/2 +1
+            }
+            if(z==3){
+               var ry = y+16/2 +1
+            }
+            if(z==4){
+               var ry = y+32/2 +1
+            }
+            return ry
+         }
+         L.TileLayer.Kitten = L.TileLayer.extend({
+               getTileUrl: function(coords) {
+                  // var i = Math.ceil( Math.random() * 4 );
+                  var z = coords.z
+                 var y = trans(coords.y,z)// gety(coords.y,coords.z)
+                  
+                  var x = trans(coords.x,z) 
+                  
+                  console.log(x,y,z)
+                  return `tile3/${z}/${z}${y}/${z}${y}${x}.png?v=1`
+               },
+               getAttribution: function() {
+                  return "<a href='https://placekitten.com/attribution.html'>PlaceKitten</a>"
+               }
+            });
+
+            L.tileLayer.kitten = function() {
+               return new L.TileLayer.Kitten();
+            }
+
+         var layer =   L.tileLayer.kitten()
+         map.addLayer(layer);
+
+         // L.control.zoom({
+         //    position: 'bottomright'
+         // }).addTo(map);
+
+         // L.GridLayer.DebugCoords = L.GridLayer.extend({
+         //       createTile: function (coords) {
+         //          var tile = document.createElement('div');
+         //          var y =  gety(coords.y,coords.z)
+         //          tile.innerHTML = [coords.x,coords.y, coords.z].join(', ');
+         //          tile.style.outline = '1px solid red';
+         //          return tile;
+         //       }
+         //    });
+
+         //  L.gridLayer.debugCoords = function(opts) {
+         //       return new L.GridLayer.DebugCoords(opts);
+         // };
+
+         // map.addLayer(L.gridLayer.debugCoords());
+
+         var popup = L.popup();
+
+         function onMapClick(e) {
+            popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(map);
+         }
+
+         // map.on('click', onMapClick);
+
+         // map.on('mousemove', onMapClick);
+
+
+  var style = {
+    'default': {
+        'color': 'transparent',
+      //   'opacity':0,
+    },
+    'highlight': {
+        'color': 'red'
+    }
+};
+
+var group = new L.LayerGroup([
+    new L.Polygon([
+        [-50, -50], [50, -50], [50, -10], [-50, -10]
+    ], {
+        'label': 'Polygon 1',
+        'popup': 'Polygon 1'
+    }),
+    new L.Polygon([
+        [-50, 10], [50, 10], [50, 50], [-50, 50]
+    ], {
+        'label': 'Polygon 2',
+        'popup': 'Polygon 2'
+    })
+]).addTo(map);
+// Variable for storing highlighted layer
+var highlight;
+
+function setHighlight (layer) {
+  // Check if something's highlighted, if so unset highlight
+  if (highlight) {
+    unsetHighlight(highlight);
+  }
+  // Set highlight style on layer and store to variable
+  layer.setStyle(style.highlight);
+  highlight = layer;
+}
+
+function unsetHighlight (layer) {
+  // Set default style and clear variable
+  layer.setStyle(style.default);
+  highlight = null;
+}
+
+// Iterate
+group.eachLayer(function (layer) {
+      debugger
+      // Set default style
+      layer.setStyle(style.default);
+      // Bind label with polygon option variable
+      // layer.bindLabel(layer.options.label);
+       layer.bindTooltip(layer.options.label);
+      
+      // Bind popup with polygon option variable
+      layer.bindPopup(layer.options.popup);
+
+      // Mouseover handler
+      layer.on('mouseover', function (e) {
+         // Set highlight
+         setHighlight(layer);
+         
+      });
+
+      // Mouseout handler
+      layer.on('mouseout', function (e) {
+         // Unset highlight
+         unsetHighlight(layer);
+      });
+
+      // Fetch list from DOM
+      var list = L.DomUtil.get('list'),
+         // Add list item
+         item = L.DomUtil.create('li', 'item', list),
+         // Add link
+         link = L.DomUtil.create('a', 'link', item);
+
+      // Set link text
+      link.textContent = layer.options.label;
+      // Set link href
+      link.href = '#';
+
+      // Add clickhandler to link
+      L.DomEvent.addListener(link, 'click', function (e) {
+         // Set highlight
+         setHighlight(layer);
+      });
+});
+
+      </script>
+   </body>
+</html>
