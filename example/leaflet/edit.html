@@ -85,8 +85,8 @@
                return new L.TileLayer.Kitten();
             }
 
-         var layer =   L.tileLayer.kitten()
-         map.addLayer(layer);
+         var layer1 =   L.tileLayer.kitten()
+         map.addLayer(layer1);
 
          // var tester = new MyTestTool(map)
          // tester.addDebugGrid()
@@ -128,6 +128,7 @@
 
 
             map.on(L.Draw.Event.CREATED, function (e) {
+               debugger
                if(window.draw_hand){
                   window.draw_hand(e)
                }else{

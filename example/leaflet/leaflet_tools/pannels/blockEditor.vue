@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import ex from 'weblib/ex'
 function layerToPolygen(layer){
     var pp = []
     var ls = layer.editing.latlngs[0][0]
@@ -74,11 +75,16 @@ export default {
             this.polyobj.editing.disable()
         },
         finish(){
-            this.polyobj.redraw()
-            var polygen = layerToPolygen(this.polyobj)
-            map.removeLayer(this.polyobj)
-            delete window.draw_hand
-            this.$emit('finish',{label:this.label,polygen:polygen,id:this.id})
+            if(this.polyobj && this.polyobj.redraw){
+                this.polyobj.redraw()
+                var polygen = layerToPolygen(this.polyobj)
+                map.removeLayer(this.polyobj)
+                delete window.draw_hand
+                this.$emit('finish',{label:this.label,polygen:polygen,id:this.id})
+            }else{
+                this.$emit('finish',{polygen:[]})
+            }
+    
         }
     }
 }
