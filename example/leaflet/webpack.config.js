@@ -10,7 +10,7 @@ var webpack = require('webpack')
 module.exports =
 {
     //context:__dirname,
-    mode:'development', //'production', //
+    mode:'production', //'development', //
     entry: {
         leaflet_test:'./main.js',
     },

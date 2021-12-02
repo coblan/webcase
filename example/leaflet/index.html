@@ -4,18 +4,19 @@
       <title>Leaflet sample</title>
       <!-- <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/> -->
       <!-- <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script> -->
+      <meta charset="UTF-8">
       <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet-src.min.js"></script>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css">
       <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.js"></script>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.css">
-      <script src="static/js/leaflet_test.pack.js"></script>
+      <script src="static/js/leaflet_test.pack.js?v=2"></script>
    </head>
    <body>
       <div id = "map" style = "width: 100vw; height: 100vh"></div>
-      <div id='float'>
+      <!-- <div id='float'>
          <component is='floatPannel' :map="map"></floatPannel>
-      </div>
+      </div> -->
       <script>
       
          // Creating map options
@@ -88,10 +89,10 @@
          var layer =   L.tileLayer.kitten()
          map.addLayer(layer);
 
-         // var tester = new MyTestTool(map)
+         var tester = new MyTestTool(map)
          // tester.addDebugGrid()
          // tester.addPopPosion()
-         // tester.addPloygen()
+         tester.addPloygen()
 
          // var drawer = new Drawer(map)
          // drawer.polygon()
@@ -117,49 +118,13 @@
          //    });
 
 
-         var drawnItems = new L.FeatureGroup();
-            map.addLayer(drawnItems);
-         var drawControl = new L.Control.Draw({
-                  edit: {
-                     featureGroup: drawnItems
-                  }
-            });
-            map.addControl(drawControl);
 
-
-            map.on(L.Draw.Event.CREATED, function (e) {
-               if(window.draw_hand){
-                  window.draw_hand(e)
-               }else{
-                  alert('没有对接函数')
-               }
-              
-            //  var  aa = e.layer.toGeoJSON()
-            //  var cord = aa.geometry.coordinates
-
-          
-
-            // var type = e.layerType,
-            //    layer = e.layer;
-            // if (type === 'marker') {
-            //    // Do marker specific actions
-            // }
-            // // Do whatever else you need to. (save to db; add to map etc)
-            // map.addLayer(layer);
-         });
-
-
-
-
-
-
-
-         new Vue({
-            el:'#float',
-            data:{
-               map:map
-            }
-         })
+         // new Vue({
+         //    el:'#float',
+         //    data:{
+         //       map:map
+         //    }
+         // })
 
 // 添加路径
 // create a red polyline from an array of LatLng points

@@ -1,7 +1,7 @@
 <template>
     <div class="float-pannel">
         <button @click="createBlock" >创建区域</button>
-        <button @click="保存">保存</button>
+        <button @click="saveToServer">保存</button>
         <div>
             <blockEditor v-if='view=="blockEditor"' @finish='onPolygenChange' :bound='crt_bound'></blockEditor> 
             <blockList v-if='view=="blocklist"' :bounding="model.blocks" @edit='editBlock'></blockList> 
@@ -50,8 +50,18 @@ export default {
         },
         async getData(){
            var resp = await axios.get('http://demo.softjing.com/dapi/myjson/value')
-           
+           if(resp.data && resp.data.data){
+                this.model = JSON.parse(resp.data.data)
+           }
            console.log('bbc')
+        },
+        async saveToServer(){
+            var post_data = {
+                text:JSON.stringify(this.model)
+            }
+            var resp = await axios.post('http://demo.softjing.com/dapi/myjson/save',post_data)
+            debugger
+            console.log
         },
         onPolygenChange(event){
             this.view='blocklist'
@@ -80,12 +90,7 @@ export default {
             
             this.po.editing.enable()
         },
-        savePolygon(){
-            debugger
-            var po = this.po
-            
-            console.log('mm')
-        }
+     
     }
 }
 </script>

@@ -1,5 +1,5 @@
-
-
+import axios from 'axios'
+import ex from 'weblib/ex'
 export class MyTestTool{
     constructor(map){
         this.map = map
@@ -39,31 +39,54 @@ export class MyTestTool{
     
         // map.on('mousemove', onMapClick);
     }
-    addPloygen(){
+    async addPloygen(){
         var style = {
             'default': {
                 'color': 'transparent',
+                'fillColor':'transparent',
+                'fillOpacity':0,
               //   'opacity':0,
             },
             'highlight': {
-                'color': 'red'
+                'color': '#36BF36',
+                'fillColor':'#36BF36',
+                'fillOpacity':0.4,
+            
             }
         };
-        
-        var group = new L.LayerGroup([
-            new L.Polygon([
-                [-50, -50], [50, -50], [50, -10], [-50, -10]
-            ], {
-                'label': 'Polygon 1',
-                'popup': 'Polygon 1'
-            }),
-            new L.Polygon([
-                [-50, 10], [50, 10], [50, 50], [-50, 50]
-            ], {
-                'label': 'Polygon 2',
-                'popup': 'Polygon 2'
-            })
-        ]).addTo(this.map);
+
+        var resp = await axios.get('http://demo.softjing.com/dapi/myjson/value')
+        if(resp.data && resp.data.data){
+             this.model = JSON.parse(resp.data.data)
+        }
+        var outlist = []
+         ex.each(this.model.blocks,item=>{
+            outlist.push(
+                new L.Polygon(item.polygen, {
+                    'label': item.label,
+                    'popup': `等待对接${item.label}的数据`,
+                    weight: 1
+                   
+                }), 
+            )
+        })
+        var group = new L.LayerGroup(outlist).addTo(this.map);
+
+        // var group = new L.LayerGroup([
+        //     new L.Polygon([
+        //         [-50, -50], [50, -50], [50, -10], [-50, -10]
+        //     ], {
+        //         'label': 'Polygon 1',
+        //         'popup': 'Polygon 1'
+        //     }),
+        //     new L.Polygon([
+        //         [-50, 10], [50, 10], [50, 50], [-50, 50]
+        //     ], {
+        //         'label': 'Polygon 2',
+        //         'popup': 'Polygon 2'
+        //     })
+        // ]).addTo(this.map);
+
         // Variable for storing highlighted layer
         var highlight;
         
@@ -85,7 +108,7 @@ export class MyTestTool{
         
         // Iterate
         group.eachLayer(function (layer) {
-              debugger
+              
               // Set default style
               layer.setStyle(style.default);
               // Bind label with polygon option variable
