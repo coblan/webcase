@@ -2,21 +2,21 @@
     <div class="float-pannel">
         
         <button @click="saveToServer">保存</button>
-        <template v-if='view !="pointEditor"'>
+        <template v-if='view !="pointList"'>
             <button @click="switchToPointCtrl" >点控制</button>
             <button @click="createBlock" >创建区域</button>
             <button @click="showAllBlock">显示所有区域</button>
             <button @click="closeBlock">关闭区域</button>
         </template>
        
-        <template v-if='view=="pointEditor"'>
+        <template v-if='view=="pointList"'>
             <button @click="view='blocklist'">区域控制</button>
         </template>
 
         <div>
             <blockEditor v-if='view=="blockEditor"' @finish='onPolygenChange' :bound='crt_bound'></blockEditor> 
             <blockList v-if='view=="blocklist"' :bounding="model.blocks" @edit='editBlock'></blockList> 
-            <pointEditor v-if='view=="pointEditor"'></pointEditor>
+            <pointList v-if='view=="pointList"' :points="model.points" :lines='model.lines'></pointList>
         </div>
 
         <!-- <button @click="drawPolygen">画多边形</button>
@@ -30,23 +30,25 @@ import blockEditor from './pannels/blockEditor.vue'
 import ex from 'weblib/ex'
 import axios from 'axios'
 import cfg from 'weblib/pc_cfg'
-import pointEditor from './pannels/pointEditor.vue'
+import pointList from './pannels/pointList.vue'
 
 export default {
     components:{
         blockList,
         blockEditor,
-        pointEditor
+        pointList
     },
     props:{
         map:{}
     },
     data(){
         return {
-            view: 'pointEditor', // 'blocklist',
+            view: 'pointList', // 'blocklist',
             crt_bound:{},
             model:{
-                blocks:[]
+                blocks:[],
+                points:[],
+                lines:[],
             },
         }
     },
@@ -56,7 +58,7 @@ export default {
     },
     methods:{
         switchToPointCtrl(){
-            this.view = 'pointEditor'
+            this.view = 'pointList'
         },
         showAllBlock(){
             var outlist = []
@@ -87,6 +89,8 @@ export default {
            var resp = await axios.get('http://demo.softjing.com/dapi/myjson/value')
            if(resp.data && resp.data.data){
                 this.model = JSON.parse(resp.data.data)
+                this.model.points = this.model.points || []
+                this.model.lines = this.model.lines || []
            }
            console.log('bbc')
         },
