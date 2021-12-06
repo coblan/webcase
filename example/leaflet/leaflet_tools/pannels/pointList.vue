@@ -73,7 +73,7 @@ export default {
         },
         linkFinish(){
             this.view = 'pointList'
-            
+            this.showAllPoint()
         },
         onFinish(event){
             this.view="pointList"
@@ -90,6 +90,7 @@ export default {
         editPoint(item){
             this.edit_point = item
             this.view = 'pointEditor'
+            
         }
     }
 }

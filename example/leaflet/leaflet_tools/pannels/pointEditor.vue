@@ -65,6 +65,9 @@ export default {
             }
         },
         finish(){
+            if(this.crt_layer){
+                map.removeLayer(this.crt_layer)
+            }
             map.off('click');
             this.$emit('finish',{id:this.myid,label:this.label,latlng:this.crt_point})
 
