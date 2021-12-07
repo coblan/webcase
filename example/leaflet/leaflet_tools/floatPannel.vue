@@ -43,7 +43,7 @@ export default {
     },
     data(){
         return {
-            view: 'pointList', // 'blocklist',
+            view:  'blocklist',//'pointList', //
             crt_bound:{},
             model:{
                 blocks:[],
