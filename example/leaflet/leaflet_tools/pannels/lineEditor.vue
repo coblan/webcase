@@ -1,6 +1,7 @@
 <template>
     <div>
         <button @click="createLine">创建线条</button>
+        <!-- <button @click="showAllEle">显示所有</button> -->
         <button @click="confirmOk">确定</button>
         <button @click="deleteLine">删除</button>
         <button @click="finish">退出</button>
@@ -47,6 +48,10 @@ export default {
         }
     },
     methods:{
+        // showAllEle(){
+        //     this.showAllPoint()
+        //     this.showAllLine()
+        // },
         createLine(){
             this.view= 'createLine'
             this.crt_line = {

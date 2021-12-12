@@ -2,6 +2,7 @@
     <div>
         <template v-if='view=="pointList"'>
                 <button @click="creatPoint">创建点</button>
+                <button @click="showAllPoint">显示所有点</button>
                 <button @click="editLink">编辑连线</button>
         </template>
 
