@@ -220,7 +220,7 @@ export default {
         },
         is_show_tooltip:function(head){
             if(head.show_tooltip ==undefined){
-                return true
+                return false
             }else {
                 return head.show_tooltip
             }
