@@ -13,6 +13,10 @@
                               size="mini"
                               height="100%"
                               style="width: 100%"
+                              lazy
+                               row-key="pk"
+                              :load="loadChildren"
+                              :tree-props="{children: 'children', hasChildren:'hasChildren'}"
                               @header-dragend="on_header_dragend"
                               @sort-change="on_sort_change($event)"
                               @selection-change="handleSelectionChange"
@@ -49,8 +53,8 @@
                                     </el-table-column>
                              </el-table-column>
                             <el-table-column v-else-if="! head.sublevel && head.editor"
+                                                :key="head.name"
                                               :class-name="head.class"
-                                              :key="head.name"
                                              :show-overflow-tooltip="is_show_tooltip(head) "
                                               :fixed="head.fixed"
                                              :label="head.label"
@@ -68,9 +72,9 @@
 
                             </el-table-column>
                               <el-table-column v-else-if="! head.sublevel"
+                                            :key="head.name"
                                              :show-overflow-tooltip="is_show_tooltip(head) "
                                              :fixed="head.fixed"
-                                             :key="head.name"
                                              :class-name="head.class"
                                              :prop="head.name.toString()"
                                              :label="head.label"
@@ -81,11 +85,16 @@
 
                         </template>
                     </el-table>
+    
                     </div>
 </template>
 <script>
 import {TableSetting} from './tableSetting.js'
+
 export default {
+    components:{
+        testTable,
+    },
     props:{
         heads:{
             default:()=>{return []},
@@ -212,6 +221,14 @@ export default {
 
     },
     methods:{
+        loadChildren(tree, treeNode, resolve){
+            var director_name = tree._director_name.split('.')[0]
+            var search_args = {par:tree.pk}
+            ex.director_call('d.get_rows',{director_name:director_name,search_args:search_args }).then(resp=>{
+                resolve(resp.rows)
+            })
+
+        },
         refresh_layout(){
             this.is_refresh_layout=true
             this.$nextTick(()=>{
