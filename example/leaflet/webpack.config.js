@@ -13,6 +13,7 @@ module.exports =
     mode:'development', //'production', //
     entry: {
         leaflet_test:'./main.js',
+        cj:'./cj.js'
     },
     output: {
         path:path.resolve(__dirname, './static/js'),
@@ -91,7 +92,21 @@ module.exports =
                 }, {
                     loader: 'less-loader' // compiles Less to CSS
                 }]
-            }
+            },
+            {
+                test: /\.(png|jpg|gif|ttf|otf|css)$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            // limit: 10,
+                            limit: 8192,
+                            name: '[path][name].[ext]',
+                            esModule: false,
+                        },
+                    },
+                ],
+            },
         ]
 
     },

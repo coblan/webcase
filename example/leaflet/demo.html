@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Leaflet sample</title>
+      <!-- <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/> -->
+      <!-- <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script> -->
+      <meta charset="UTF-8">
+      <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet-src.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css"> -->
+      <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script> -->
+      <script src="/static/leaflet-src.min.js"></script>
+      <link rel="stylesheet" href="/static/leaflet.css">
+      <script src="/static/vue.js"></script>
+
+      <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.css"> -->
+      <script src="static/js/cj.pack.js"></script>
+   </head>
+   <body>
+      <!-- <div id = "map" style = "width: 100vw; height: 100vh"></div> -->
+      <div id='app' style='position: relative;width: 600px;height: 500px;'>
+         <leafmap ref='map' :popup-hander='onBuildingClick' ></leafmap> 
+      </div>
+      
+      <!-- <div id='float'>
+         <component is='popPannel' :map="map"></floatPannel>
+      </div> -->
+
+      <script>
+      
+    
+   
+         new Vue({
+            el:'#app',
+            
+            mounted(){
+               this.drawPath()
+            },
+            methods:{
+                onBuildingClick(buildName){
+                   return new Promise((resolve,reject)=>{
+                     resolve( `<div style="width:300px;height:400px">
+                     <div style="color:red;">我点击的建筑是${buildName}</div>
+                     </div>`)
+                   })
+               },
+               drawPath(){
+                  var latlngs = [
+                     [45.51, -122.68],
+                     [37.77, -122.43],
+                     [34.04, -118.2]
+                  ]
+                  debugger
+                  this. polyline =  this.$refs.map.drawPath(latlngs)
+               },
+               clearPath(){
+                  this.$refs.map.clearPath(this.polyline)
+               }
+            }
+         })
+
+// 添加路径
+// create a red polyline from an array of LatLng points
+// var latlngs = [
+//     [45.51, -122.68],
+//     [37.77, -122.43],
+//     [34.04, -118.2]
+// ];
+
+// var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+
+      </script>
+   </body>
+</html>
