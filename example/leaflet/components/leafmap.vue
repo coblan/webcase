@@ -11,6 +11,29 @@ import ex from 'weblib/ex'
  * 105.90212801, 29.37419069       10.50000283438376,45.09894248941958
  * 105.89277216, 29.37494214       -43.59820790226192,-67.58415618645475
  */
+ function get_a2(x1,y1,x2,y2){
+     var a2 = (x1*y2-x2*y1) / (x1-x2)
+     return a2
+ }
+ function get_a1(x,y,a2){
+     var a1 = (y-a2)/x
+     return a1
+ }
+
+ var a2 = get_a2(105.90205840,-2.482139061473738,105.89277216,-43.59820790226192)
+ var a1 = get_a1(105.90205840,-2.482139061473738,a2)
+ var b2 = get_a2(29.37264252,64.94803602021031,29.37494214,-67.58415618645475)
+ var b1 = get_a1(29.37264252,64.94803602021031,b2)
+
+function map_to_point(lng,lat){
+    var p_y = a1 * lng + a2
+    var p_x = b1 * lat + b2
+    return [p_x,p_y]
+}
+
+var cc = map_to_point(105.90424352, 29.37344316)
+ debugger
+
 
 export default {
     props:{
