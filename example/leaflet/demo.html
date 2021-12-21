@@ -14,10 +14,11 @@
 
       <script src="https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet-src.min.js"></script>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet.css">
+      <script src="https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js"></script>
 
       <script src="/static/vue.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/axios@0.24.0/dist/axios.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js"></script>
+     
       <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.js"></script>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.css"> -->
       <script src="static/js/cj.pack.js"></script>
@@ -26,6 +27,11 @@
       <!-- <div id = "map" style = "width: 100vw; height: 100vh"></div> -->
       <div id='app' style='position: relative;width: 600px;height: 500px;'>
          <leafmap ref='map' :popup-hander='onBuildingClick' ></leafmap> 
+         <div>
+            <input type="text" v-model='api_url' style="width: 400px;">
+            <button @click="drawPath">请求接口画路径</button>
+            <button @click="clearPath">清除路径</button>
+         </div>
       </div>
       
       <!-- <div id='float'>
@@ -38,9 +44,13 @@
    
          new Vue({
             el:'#app',
-            
+            data(){
+               return {
+                  api_url:'https://csh.cqcfe.com/blade-campus/campusevents/mapPath?accessToken=3BA8B8449AFE84A29599A8CEB750E863E4FA515D1B0038875D8F314C3CB6C183&endTime=2021-12-18%2000%3A00%3A00&startTime=2021-12-17%2000%3A00%3A00&userName=%E5%82%85%E5%BC%BA%E5%BC%BA',
+               }
+            },
             mounted(){
-               this.drawPath()
+               // this.drawPath()
             },
             methods:{
                 onBuildingClick(buildName){
@@ -51,14 +61,12 @@
                    })
                },
                async drawPath(){
-                  var resp = await axios .get('https://csh.cqcfe.com/blade-campus/campusevents/mapPath?accessToken=3BA8B8449AFE84A29599A8CEB750E863E4FA515D1B0038875D8F314C3CB6C183&endTime=2021-12-18%2000%3A00%3A00&startTime=2021-12-17%2000%3A00%3A00&userName=%E5%82%85%E5%BC%BA%E5%BC%BA')
-                 debugger
+                  var resp = await axios .get(this.api_url)
                   var pathlist=resp.data.data.map(item=>{return {lat:parseFloat(item.latitude) ,lng:parseFloat(item.longitude) } } )
-                  
-                  this. polyline =  this.$refs.map.drawPath(pathlist)
+                  this.$refs.map.drawPath(pathlist)
                },
                clearPath(){
-                  this.$refs.map.clearPath(this.polyline)
+                  this.$refs.map.clearPath()
                }
             }
          })

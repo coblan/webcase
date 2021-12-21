@@ -80,6 +80,11 @@ export default {
         popupHander:{},
         pp:{},
     },
+    data(){
+        return {
+            current_layers:[]
+        }
+    },
     mounted(){
         this.initMap()
         this.updateBackground()
@@ -276,11 +281,13 @@ export default {
        drawPath(pathList){
         //    pathList = pathList.slice(1,)
             var convertd = ex.map(pathList,item=>{return map_to_point(item.lng,item.lat)}) 
-            L.marker(convertd[0],{
+            var start_layer = L.marker(convertd[0],{
                 title:'开始',
                 icon:startIcon,
             }).addTo(this.map);
-            L.marker(convertd[convertd.length-1],{title:'结束',icon:endIcon}).addTo(this.map);
+            var end_layer =  L.marker(convertd[convertd.length-1],{title:'结束',icon:endIcon}).addTo(this.map);
+            this.current_layers.push(start_layer)
+            this.current_layers.push(end_layer)
 
             var polyline = L.polyline(convertd, {color: 'red'}).addTo(this.map);
             var decorator = L.polylineDecorator(polyline, {
@@ -289,11 +296,13 @@ export default {
                     {offset: 0, repeat: 100, symbol: L.Symbol.arrowHead({pixelSize: 8, polygon: false, pathOptions: {stroke: true}})},
                 ]
             }).addTo(this.map);
+            this.current_layers.push(polyline)
+            this.current_layers.push(decorator)
             return polyline
         },
-        clearPath(path){
-             ex.each(path,line=>{
-                map.removeLayer(line)
+        clearPath(){
+             ex.each(this.current_layers,line=>{
+                this.map.removeLayer(line)
             })
         }
     }
