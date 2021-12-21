@@ -6,34 +6,74 @@ import axios from 'axios'
 import ex from 'weblib/ex'
 
 /**
- * 105.90205840,29.37264252        -2.482139061473738,64.94803602021031
- * 105.90424352, 29.37344316       18.54464307862666,80.41469458762039
- * 105.90212801, 29.37419069       10.50000283438376,45.09894248941958
- * 105.89277216, 29.37494214       -43.59820790226192,-67.58415618645475
+ * 105.897753,29.367625      18.276784064591638,80.26723881428742
+ * 
+ * 105.89087,29.370759       0.6607174227448667,-35.23212651918641
+ * 
+ * 105.892897,29.366159      -24.96428661925269,44.35182695665905       
  */
- function get_a2(x1,y1,x2,y2){
-     var a2 = (x1*y2-x2*y1) / (x1-x2)
-     return a2
- }
- function get_a1(x,y,a2){
-     var a1 = (y-a2)/x
-     return a1
- }
 
- var a2 = get_a2(105.90205840,-2.482139061473738,105.89277216,-43.59820790226192)
- var a1 = get_a1(105.90205840,-2.482139061473738,a2)
- var b2 = get_a2(29.37264252,64.94803602021031,29.37494214,-67.58415618645475)
- var b1 = get_a1(29.37264252,64.94803602021031,b2)
+
+// [6.374867003622302e+03,8.379752056158515e+03,-9.211592305516222e+05;1.113749825424718e+04,-1.239309663358848e+04,-8.153999574033960e+05]
 
 function map_to_point(lng,lat){
-    var p_y = a1 * lng + a2
-    var p_x = b1 * lat + b2
+    
+    
+    var p_x = 6.374867003622302e+03 * lng + 8.379752056158515e+03*lat -9.211592305516222e+05
+    var p_y = 1.113749825424718e+04 * lng + -1.239309663358848e+04 * lat + -8.153999574033960e+05
     return [p_x,p_y]
 }
 
-var cc = map_to_point(105.90424352, 29.37344316)
- debugger
+var x_PI = 3.14159265358979324 * 3000.0 / 180.0;
+var PI = 3.1415926535897932384626;
+var a = 6378245.0;
+var ee = 0.00669342162296594323;
+function transformlat(lng, lat) {
+    var ret = -100.0 + 2.0 * lng + 3.0 * lat + 0.2 * lat * lat + 0.1 * lng * lat + 0.2 * Math.sqrt(Math.abs(lng));
+    ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0;
+    ret += (20.0 * Math.sin(lat * PI) + 40.0 * Math.sin(lat / 3.0 * PI)) * 2.0 / 3.0;
+    ret += (160.0 * Math.sin(lat / 12.0 * PI) + 320 * Math.sin(lat * PI / 30.0)) * 2.0 / 3.0;
+    return ret
+}
 
+function transformlng(lng, lat) {
+    var ret = 300.0 + lng + 2.0 * lat + 0.1 * lng * lng + 0.1 * lng * lat + 0.1 * Math.sqrt(Math.abs(lng));
+    ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0;
+    ret += (20.0 * Math.sin(lng * PI) + 40.0 * Math.sin(lng / 3.0 * PI)) * 2.0 / 3.0;
+    ret += (150.0 * Math.sin(lng / 12.0 * PI) + 300.0 * Math.sin(lng / 30.0 * PI)) * 2.0 / 3.0;
+    return ret
+}
+
+function wgs84togcj02(lng, lat) {
+    var dlat = transformlat(lng - 105.0, lat - 35.0);
+    var dlng = transformlng(lng - 105.0, lat - 35.0);
+    var radlat = lat / 180.0 * PI;
+    var magic = Math.sin(radlat);
+    magic = 1 - ee * magic * magic;
+    var sqrtmagic = Math.sqrt(magic);
+    dlat = (dlat * 180.0) / ((a * (1 - ee)) / (magic * sqrtmagic) * PI);
+    dlng = (dlng * 180.0) / (a / sqrtmagic * Math.cos(radlat) * PI);
+    var mglat = lat + dlat;
+    var mglng = lng + dlng;
+    return [mglng, mglat]
+}
+
+// var cc = map_to_point(105.90424352, 29.37344316)
+ 
+// var startIcon = L.icon({
+//     iconUrl: '/static/start.png',
+//     iconSize: [38, 95],
+//     iconAnchor: [22, 94],
+//     popupAnchor: [-3, -76],
+//     shadowUrl: 'my-icon-shadow.png',
+//     shadowSize: [68, 95],
+//     shadowAnchor: [22, 94]
+// });
+
+import start from '../assets/start.png'
+import end from '../assets/end.png'
+var startIcon = L.divIcon({className: 'start-icon',html:'<img src="'+start +'">'});
+var endIcon = L.divIcon({className: 'start-icon',html:'<img src="'+end +'">'});
 
 export default {
     props:{
@@ -234,7 +274,21 @@ export default {
         });
     },
        drawPath(pathList){
-            var polyline = L.polyline(pathList, {color: 'red'}).addTo(this.map);
+        //    pathList = pathList.slice(1,)
+            var convertd = ex.map(pathList,item=>{return map_to_point(item.lng,item.lat)}) 
+            L.marker(convertd[0],{
+                title:'开始',
+                icon:startIcon,
+            }).addTo(this.map);
+            L.marker(convertd[convertd.length-1],{title:'结束',icon:endIcon}).addTo(this.map);
+
+            var polyline = L.polyline(convertd, {color: 'red'}).addTo(this.map);
+            var decorator = L.polylineDecorator(polyline, {
+                patterns: [
+                    // defines a pattern of 10px-wide dashes, repeated every 20px on the line
+                    {offset: 0, repeat: 100, symbol: L.Symbol.arrowHead({pixelSize: 8, polygon: false, pathOptions: {stroke: true}})},
+                ]
+            }).addTo(this.map);
             return polyline
         },
         clearPath(path){
