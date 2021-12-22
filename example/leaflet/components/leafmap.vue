@@ -4,7 +4,7 @@
 <script>
 import axios from 'axios'
 import ex from 'weblib/ex'
-
+import map_data from './map_data.js'
 /**
  * 105.897753,29.367625      18.276784064591638,80.26723881428742
  * 
@@ -58,31 +58,21 @@ function wgs84togcj02(lng, lat) {
     return [mglng, mglat]
 }
 
-// var cc = map_to_point(105.90424352, 29.37344316)
- 
-// var startIcon = L.icon({
-//     iconUrl: '/static/start.png',
-//     iconSize: [38, 95],
-//     iconAnchor: [22, 94],
-//     popupAnchor: [-3, -76],
-//     shadowUrl: 'my-icon-shadow.png',
-//     shadowSize: [68, 95],
-//     shadowAnchor: [22, 94]
-// });
 
 import start from '../assets/start.png'
 import end from '../assets/end.png'
-var startIcon = L.divIcon({className: 'start-icon',html:'<img src="'+start +'">'});
-var endIcon = L.divIcon({className: 'start-icon',html:'<img src="'+end +'">'});
+
 
 export default {
     props:{
         popupHander:{},
-        pp:{},
+        imageStatic:{},
     },
     data(){
         return {
-            current_layers:[]
+            current_layers:[],
+            startIcon : L.divIcon({className: 'start-icon',html:'<img src="'+start +'">'}),
+             endIcon : L.divIcon({className: 'start-icon',html:'<img src="'+end +'">'}),
         }
     },
     mounted(){
@@ -107,6 +97,7 @@ export default {
          this.map = new L.map('map', mapOptions);
         },
         updateBackground(){
+            var image_static = this.imageStatic
             function gety(y,z){
                 if(z==1){
                 var ry = y+4
@@ -146,7 +137,7 @@ export default {
                   var x = trans(coords.x,z) 
                   
                   console.log(x,y,z)
-                  return `tile3/${z}/${z}${y}/${z}${y}${x}.png?v=1`
+                  return `${image_static}/${z}/${z}${y}/${z}${y}${x}.png?v=1`
                },
                getAttribution: function() {
                   return "cj"
@@ -176,10 +167,11 @@ export default {
             }
         };
 
-        var resp = await axios.get('http://demo.softjing.com/dapi/myjson/value')
-        if(resp.data && resp.data.data){
-             this.model = JSON.parse(resp.data.data)
-        }
+        // var resp = await axios.get('http://demo.softjing.com/dapi/myjson/value')
+        // if(resp.data && resp.data.data){
+        //      this.model = JSON.parse(resp.data.data)
+        // }
+        this.model = map_data
         var outlist = []
         var self_vc = this
          ex.each(this.model.blocks,item=>{
@@ -280,12 +272,15 @@ export default {
     },
        drawPath(pathList){
         //    pathList = pathList.slice(1,)
+        if (pathList.length <2){
+            return
+        }
             var convertd = ex.map(pathList,item=>{return map_to_point(item.lng,item.lat)}) 
             var start_layer = L.marker(convertd[0],{
                 title:'开始',
-                icon:startIcon,
+                icon:this.startIcon,
             }).addTo(this.map);
-            var end_layer =  L.marker(convertd[convertd.length-1],{title:'结束',icon:endIcon}).addTo(this.map);
+            var end_layer =  L.marker(convertd[convertd.length-1],{title:'结束',icon:this.endIcon}).addTo(this.map);
             this.current_layers.push(start_layer)
             this.current_layers.push(end_layer)
 

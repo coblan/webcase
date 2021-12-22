@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>cj map demo</title>
+      <title>Leaflet sample</title>
+      <!-- <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/> -->
+      <!-- <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script> -->
       <meta charset="UTF-8">
-      <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+      <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet-src.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css"> -->
+      <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script> -->
+
+      <!-- <script src="/static/leaflet-src.min.js"></script>
+      <link rel="stylesheet" href="/static/leaflet.css"> -->
+
+      <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet-src.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet.css">
+      <script src="https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js"></script> -->
+
+      <script src="/static/vue.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/axios@0.24.0/dist/axios.min.js"></script>
+     
+      <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.css"> -->
       <script src="static/js/cj.pack.js"></script>
    </head>
    <body>
-   
-      <div id='app'>
-         <div class="container"  style='position: relative;width: 800px;height: 500px;'>
-            <leafmap ref='map' :popup-hander='onBuildingClick' image-static='tile3'></leafmap> 
-         </div>
-         
+      <!-- <div id = "map" style = "width: 100vw; height: 100vh"></div> -->
+      <div id='app' style='position: relative;width: 600px;height: 500px;'>
+         <leafmap ref='map' :popup-hander='onBuildingClick' ></leafmap> 
          <div>
             <div>
                <div>请求路径</div>
@@ -29,23 +42,14 @@
          </div>
       </div>
       
-      <script>
-         /*
-         需要引入的库
-         1. vue2.6
-         2. cj.pack.js   //这个文件封装了地图
+      <!-- <div id='float'>
+         <component is='popPannel' :map="map"></floatPannel>
+      </div> -->
 
-         Vue组件
-         leafmap  //地图组件
-         leafmap默认是 100% 高宽定位，所以只需要设置外部的container容器大小，既可以控制地图大小
-         属性:
-         popup-hander   : 点击的回调函数，可以是异步函数，需要返回弹出框的html代码
-         image-static  :  地图的url根地址
-         方法:
-         drawPath: 在地图上画路径。接受参数格式为: [{lat:23,lng:150},{lat:23,lng:150}],长度>2
-         clearPath: 清空上次画的路径
-         
-         */
+      <script>
+      
+    
+   
          new Vue({
             el:'#app',
             data(){
