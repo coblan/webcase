@@ -36,7 +36,7 @@
          2. cj.pack.js   //这个文件封装了地图
 
          Vue组件
-         leafmap  //地图组件
+         leafmap  //地图组件,暴露在全局，
          leafmap默认是 100% 高宽定位，所以只需要设置外部的container容器大小，既可以控制地图大小
          属性:
          popup-hander   : 点击的回调函数，可以是异步函数，需要返回弹出框的html代码
@@ -52,6 +52,9 @@
                return {
                   api_url:'https://csh.cqcfe.com/blade-campus/campusevents/mapPath?accessToken=3BA8B8449AFE84A29599A8CEB750E863E4FA515D1B0038875D8F314C3CB6C183&endTime=2021-12-23%2000%3A00%3A00&startTime=2021-12-22%2000%3A00%3A00&userName=%E7%BD%97%E5%90%AF%E4%BC%9F',
                }
+            },
+            components:{
+               leafmap,
             },
             mounted(){
                // this.drawPath()
