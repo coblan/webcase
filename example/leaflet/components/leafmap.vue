@@ -60,6 +60,7 @@ function wgs84togcj02(lng, lat) {
 
 import start from '../assets/start.png'
 import end from '../assets/end.png'
+import camera_png from '../assets/camera1.png'
 import * as dayjs from 'dayjs'
 import {FreePromise} from 'weblib/ex/promise'
 import ex from 'weblib/ex'
@@ -73,7 +74,8 @@ export default {
     data(){
         return {
             current_layers:[],
-            loaded:new FreePromise()
+            loaded:new FreePromise(),
+            cameras:[],
         }
     },
     mounted(){
@@ -92,6 +94,7 @@ export default {
             this.addPloygen()
             this. startIcon = L.divIcon({className: 'start-icon',html:'<img src="'+start +'">'})
             this. endIcon = L.divIcon({className: 'start-icon',html:'<img src="'+end +'">'})
+            this.cameraIcon = L.divIcon({className: 'start-icon',html:'<img src="'+camera_png +'">'})
             
         })
     },
@@ -315,7 +318,28 @@ export default {
              ex.each(this.current_layers,line=>{
                 this.map.removeLayer(line)
             })
-        }
+        },
+        drawCamera(posList){
+            /**
+             * @posList: [{lng:150.2,lat:30},{lng:150.3,lat:30.1}}]
+             */
+
+            for(var i=0;i<posList.length;i++){
+                var item = posList[i]
+                var pos = map_to_point(item.lng,item.lat)
+                var start_layer = L.marker(pos,{
+                                title:'摄像头',
+                                icon:this.cameraIcon,
+                   }).addTo(this.map);
+                   this.cameras.push(start_layer)
+            }
+
+        },
+        clearCamera(){
+            ex.each(this.cameras,line=>{
+                            this.map.removeLayer(line)
+                        })
+               }
     }
 }
 </script>

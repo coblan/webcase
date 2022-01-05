@@ -21,6 +21,8 @@
                <div>
                   <button @click="drawPath">请求接口画路径</button>
                   <button @click="clearPath">清除路径</button>
+                  <button @click='drawCamera'>画摄像头</button>
+                  <button @click='clearCamera'>清除摄像头</button>
                </div>
                
             </div>
@@ -44,6 +46,9 @@
          方法:
          drawPath: 在地图上画路径。接受参数格式为: [{lat:23,lng:150},{lat:23,lng:150}],长度>2
          clearPath: 清空上次画的路径
+
+         drawCamera: 在地图上画摄像头。接受参数格式:[{lng:105.890436,lat:29.36829},]
+         clearCamera() 清空地图和的摄像头
          
          */
          new Vue({
@@ -74,6 +79,14 @@
                },
                clearPath(){
                   this.$refs.map.clearPath()
+               },
+               drawCamera(){
+        
+                  var camera_list=[{lng:105.890436,lat:29.36829},{lng:105.890822,lat: 29.36945},{lng:105.886316,lat:29.370646}]
+                  this.$refs.map.drawCamera(camera_list)
+               },
+               clearCamera(){
+                  this.$refs.map.clearCamera()
                }
             }
          })
