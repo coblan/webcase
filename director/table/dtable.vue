@@ -92,9 +92,9 @@
 import {TableSetting} from './tableSetting.js'
 
 export default {
-    components:{
-        testTable,
-    },
+    // components:{
+    //     testTable,
+    // },
     props:{
         heads:{
             default:()=>{return []},
