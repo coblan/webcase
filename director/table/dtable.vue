@@ -227,8 +227,20 @@ export default {
             ex.director_call('d.get_rows',{director_name:director_name,search_args:search_args }).then(resp=>{
                 resolve(resp.rows)
             })
+            debugger
 
         },
+        updateNode(rowData) {
+            //	有父节点才能说明劫持了加载方法
+            const { parentNode } = rowData;
+            if (parentNode) {
+                const { tree, treeNode, resolve } = parentNode;
+                //	必须清空表格组件里当前层级的数据才能赋值
+                this.$set(this.$refs.e_table.store.states.lazyTreeNodeMap, tree.id, []);
+                //	更新当前层级数据
+                this.loadTableChildren(tree, treeNode, resolve);
+            }
+      },
         refresh_layout(){
             this.is_refresh_layout=true
             this.$nextTick(()=>{
