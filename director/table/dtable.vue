@@ -133,6 +133,7 @@ export default {
             advise_width:{},
             advise_order:[],
             is_refresh_layout:false,
+            node_map:{},
         }
     },
     mounted(){
@@ -227,18 +228,19 @@ export default {
             ex.director_call('d.get_rows',{director_name:director_name,search_args:search_args }).then(resp=>{
                 resolve(resp.rows)
             })
-            debugger
+            this.node_map[tree.id] = {tree, treeNode, resolve}
 
         },
-        updateNode(rowData) {
+        updateNode(row) {
             //	有父节点才能说明劫持了加载方法
-            const { parentNode } = rowData;
+
+            const parentNode = this.node_map[row.pk];
             if (parentNode) {
                 const { tree, treeNode, resolve } = parentNode;
                 //	必须清空表格组件里当前层级的数据才能赋值
                 this.$set(this.$refs.e_table.store.states.lazyTreeNodeMap, tree.id, []);
                 //	更新当前层级数据
-                this.loadTableChildren(tree, treeNode, resolve);
+                this.loadChildren(tree, treeNode, resolve);
             }
       },
         refresh_layout(){
