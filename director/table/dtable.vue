@@ -134,6 +134,7 @@ export default {
             advise_order:[],
             is_refresh_layout:false,
             node_map:{},
+            parStore: ex.vueParStore(this),
         }
     },
     mounted(){
@@ -233,7 +234,10 @@ export default {
         },
         updateNode(row) {
             //	有父节点才能说明劫持了加载方法
-
+            if(!row.pk){
+                this.parStore.vc.search()
+                return
+            }
             const parentNode = this.node_map[row.pk];
             if (parentNode) {
                 const { tree, treeNode, resolve } = parentNode;
