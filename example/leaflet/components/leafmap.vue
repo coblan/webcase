@@ -61,7 +61,7 @@ function wgs84togcj02(lng, lat) {
 import start from '../assets/start.png'
 import end from '../assets/end.png'
 import camera_png from '../assets/camera1.png'
-import * as dayjs from 'dayjs'
+// import * as dayjs from 'dayjs'
 import {FreePromise} from 'weblib/ex/promise'
 import ex from 'weblib/ex'
 import map_data from './map_data.js'
@@ -80,8 +80,8 @@ export default {
     },
     mounted(){
 
-        var vv = dayjs().format('YY-MM-DD')
-        if(vv>'22-01-31'){return}
+        // var vv = dayjs().format('YY-MM-DD')
+        // if(vv>'22-01-31'){return}
         var self = this
         ex.load_css('https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet.css')
         ex.load_js('https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet-src.min.js').then(()=>{

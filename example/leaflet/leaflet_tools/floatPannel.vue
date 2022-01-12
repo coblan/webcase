@@ -101,7 +101,8 @@ export default {
             debugger
             cfg.show_load()
             var resp = await axios.post('http://demo.softjing.com/dapi/myjson/save',post_data)
-            cfg.hide_load(2000)
+            cfg.hide_load()
+            cfg.toast('保存成功')
             console.log
         },
         onPolygenChange(event){

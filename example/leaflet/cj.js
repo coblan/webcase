@@ -11,7 +11,6 @@
 // Vue.component('popPannel',popPannel)
 
 import './cj.scss'
-import ex from 'weblib/ex'
 import leafmap from './components/leafmap.vue'
 
 window.leafmap = leafmap
