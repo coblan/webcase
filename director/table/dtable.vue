@@ -226,6 +226,7 @@ export default {
         loadChildren(tree, treeNode, resolve){
             var director_name = tree._director_name.split('.')[0]
             var search_args = {par:tree.pk}
+            ex.vueAssign(search_args,this.parStore.search_args)
             ex.director_call('d.get_rows',{director_name:director_name,search_args:search_args }).then(resp=>{
                 resolve(resp.rows)
             })
