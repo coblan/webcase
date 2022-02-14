@@ -7,7 +7,7 @@
         </div>
       </div>
       <div class="content" v-if="current">
-        <slot name="content" :contentCtx="current.content_ctx">
+        <slot name="content" :ctx="current.content_ctx">
 
         </slot>
       </div>
