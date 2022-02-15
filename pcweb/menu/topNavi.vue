@@ -29,6 +29,8 @@ export default {
   color: white;
   display: flex;
   justify-content: space-between;
+  height: 40px;
+  align-items: center;
 }
 .right{
   display: flex;
