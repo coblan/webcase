@@ -5,13 +5,21 @@
       </div>
         hello
       <div class="right">
-        <slot name="right"></slot>
+        <slot name="right">
+          <div v-for="ii in rightHeads">
+            <component v-if="ii.editor" :is="ii.editor" v-bind="ii.bind"></component>
+            <a v-else :href="ii.url">{{ii.label}}</a>
+          </div>
+        </slot>
       </div>
 
     </div>
 </template>
 <script>
 export default {
+  props:{
+    rightHeads:{}
+  }
 
 }
 </script>
@@ -23,6 +31,10 @@ export default {
   justify-content: space-between;
 }
 .right{
-
+  display: flex;
+  a{
+    color: white;
+    text-decoration: none;
+  }
 }
 </style>
