@@ -151,11 +151,34 @@ export default {
             this.loadAdviseInfo()
             // this.refresh_layout()
         }
+
+        var need_doLayout_on_start = false
         ex.each(this.heads,head=>{
             if(head.css){
                 ex.append_css(head.css)
             }
+            if(head.fixed){
+                need_doLayout_on_start = true
+            }
         })
+        // 有列fix时，可能造成错位，需要刷新一下
+        if(need_doLayout_on_start){
+//             this.$nextTick(()=>{
+//                 this.$nextTick(()=>{
+//                     this.$nextTick(()=>{
+// this.$refs.e_table.doLayout()
+//                     })
+                    
+//                 })
+//              })
+             setTimeout(()=>{
+                 this.$nextTick(()=>{
+                    this.$refs.e_table.doLayout()
+                 })
+             },50)
+        }
+       
+
         // this.loadAdviseInfo()
     },
     computed: {
@@ -249,6 +272,7 @@ export default {
             }
       },
         refresh_layout(){
+            // 应该是用在 手动选择字段完成后，刷新整个界面的geek函数
             this.is_refresh_layout=true
             this.$nextTick(()=>{
                 this.is_refresh_layout=false
