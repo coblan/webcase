@@ -14,6 +14,7 @@ import phoneValidateCode from 'weblib/pc/field_editor/phoneValidateCode.vue'
 import passwordInput from 'weblib/pc/fields/passwordInput.vue'
 import {isPhone} from 'weblib/pc/field_validate.js'
 import lineText from 'weblib/pc/field_editor/lineText.vue'
+import ex from 'weblib/ex'
 export default {
   components:{
     phoneInput,
