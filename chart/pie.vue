@@ -1,9 +1,11 @@
 <template>
-    <echartStaticBase  :option="chart_option"></echartStaticBase>
+    <echartsDiv ref="chart"></echartsDiv>  
+    <!-- <echartStaticBase  :option="chart_option"></echartStaticBase> -->
 
 </template>
 <script>
-import echartStaticBase from './echartStaticBase.vue'
+// import echartStaticBase from './echartStaticBase.vue'
+ import  echartsDiv from 'weblib/uis/echartsDiv.vue'
 
 /**
  * data:[
@@ -16,7 +18,8 @@ import echartStaticBase from './echartStaticBase.vue'
  */
     export default {
         components:{
-            echartStaticBase,
+            echartsDiv,
+            // echartStaticBase,
         },
         props:{
             data:{},
@@ -28,6 +31,9 @@ import echartStaticBase from './echartStaticBase.vue'
             return {
           
             }
+        },
+        mounted(){
+            this.$refs.chart.draw(this.chart_option)
         },
         computed:{
             chart_option(){
