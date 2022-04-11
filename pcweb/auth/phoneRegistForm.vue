@@ -90,6 +90,8 @@ export default {
         cfg.hide_load()
         if(resp.errors){
             this.error = resp.errors
+        }else{
+          this.$emit('finish',true)
         }
      },
   }
