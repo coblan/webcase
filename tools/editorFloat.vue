@@ -31,7 +31,7 @@ export default {
       }
       var resp = await cfg.pop_vue_com('com-form-one',fields_ctx)
       this.$emit('update:row',resp)
-      // this.$emit('edit')
+      this.$emit('change')
     }
   }
 }
