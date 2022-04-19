@@ -26,7 +26,7 @@ export default {
         row:this.row,
         save_fun:(vc)=>{vc.$emit('finish',vc.row)},
         ops:[
-          {name:'save',label:'确定',editor:'com-btn',click_express:'scope.ps.vc.ctx.save_fun(scope.ps.vc)'},
+          {name:'save',label:'确定',editor:'com-btn',click_express:'if(scope.ps.vc.isValid()){ scope.ps.vc.ctx.save_fun(scope.ps.vc)}'},
         ],
       }
       var resp = await cfg.pop_vue_com('com-form-one',fields_ctx)
