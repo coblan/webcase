@@ -15,6 +15,7 @@ export default {
   props:{
     row:{},
     fields:{},
+    fieldsGroup:{},
     canEdit:{
       default:true
     }
@@ -28,6 +29,9 @@ export default {
         ops:[
           {name:'save',label:'确定',editor:'com-btn',click_express:'if(scope.ps.vc.isValid()){ scope.ps.vc.ctx.save_fun(scope.ps.vc)}'},
         ],
+      }
+      if(this.fieldsGroup){
+        fields_ctx.fields_group = this.fieldsGroup
       }
       var resp = await cfg.pop_vue_com('com-form-one',fields_ctx)
       this.$emit('update:row',resp)
