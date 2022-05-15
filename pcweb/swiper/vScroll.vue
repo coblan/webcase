@@ -51,6 +51,9 @@ export default {
         delay:{
             default:3000,
         },
+        loop:{
+            default:false,
+        }
     //   direction: {
     //       default:"horizontal",//"vertical"
     //   },
@@ -84,7 +87,7 @@ export default {
                 // freeMode: true,
                 spaceBetween: 10,
                 // effect: 'fade',
-                loop: true,
+                loop: this.loop,
                 autoplay: {
                     delay: this.delay ,
                     disableOnInteraction: false,
