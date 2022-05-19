@@ -52,7 +52,7 @@ export default {
             default:3000,
         },
         loop:{
-            default:false,
+            default:true,
         }
     //   direction: {
     //       default:"horizontal",//"vertical"
