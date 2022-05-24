@@ -4,7 +4,7 @@ var webpack = require('D:/coblan/webcode/node_modules/webpack')
 
 const VueLoaderPlugin = require('D:/coblan/webcode/node_modules/vue-loader/lib/plugin')
 // const VueLoaderPlugin = require('vue-loader/lib/plugin');
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 var webpack = require('webpack')
 
 module.exports =
@@ -19,10 +19,12 @@ module.exports =
         path:path.resolve(__dirname, './static/js'),
         filename: '[name].pack.js'
     },
-    // externals: {
-    //     'vue': 'Vue',
-    //     'vue-router': 'VueRouter',
-    // },
+    externals: {
+        'vue': 'Vue',
+        // 'vue-router': 'VueRouter',
+        'axios': 'axios',
+        'element-ui': 'Element',
+    },
     watch: true,
     resolve:{
         alias: {
@@ -115,7 +117,7 @@ module.exports =
     },
     plugins: [
         new VueLoaderPlugin(),
-
+        new BundleAnalyzerPlugin(),
         //new UglifyJSPlugin()
         //new webpack.DefinePlugin({
             //'process.env.NODE_ENV': JSON.stringify('production'),

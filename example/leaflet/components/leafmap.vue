@@ -78,15 +78,18 @@ export default {
             cameras:[],
         }
     },
-    mounted(){
+    async mounted(){
 
         // var vv = dayjs().format('YY-MM-DD')
         // if(vv>'22-01-31'){return}
         var self = this
-        ex.load_css('https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet.css')
-        ex.load_js('https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet-src.min.js').then(()=>{
-            return ex.load_js('https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js')
-        }).then(()=>{
+        // ex.load_css('https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet.css')
+        // ex.load_js('https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet-src.min.js').then(()=>{
+        //     return ex.load_js('https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js')
+        // })
+        ex.load_css('https://lib.baomitu.com/leaflet/1.3.4/leaflet.css')
+        await ex.load_js("https://lib.baomitu.com/leaflet/1.3.4/leaflet.js")
+        await ex.load_js('https://lib.baomitu.com/leaflet-polylinedecorator/1.1.0/leaflet.polylineDecorator.min.js').then(()=>{
             self.loaded.resolve() 
 
             this.initMap()

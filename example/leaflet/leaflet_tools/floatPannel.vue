@@ -29,7 +29,7 @@ import blockList from './pannels/blockList.vue'
 import blockEditor from './pannels/blockEditor.vue'
 import ex from 'weblib/ex'
 import axios from 'axios'
-import cfg from 'weblib/pc_cfg'
+
 import pointList from './pannels/pointList.vue'
 
 export default {

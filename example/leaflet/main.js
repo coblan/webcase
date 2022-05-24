@@ -1,3 +1,6 @@
+import cfg from 'weblib/pc_cfg'
+window.cfg = cfg
+
 import { MyTestTool } from "./leaflet_tools/test_tools";
 import {Drawer} from './leaflet_tools/tools'
 window.MyTestTool = MyTestTool
