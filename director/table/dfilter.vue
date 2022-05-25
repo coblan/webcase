@@ -45,3 +45,9 @@ export default {
     }
 }
 </script>
+<style scoped lang="scss">
+.com-filter{
+    background-color: white;
+    padding-right: 3px;
+}
+</style>

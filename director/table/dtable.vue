@@ -491,9 +491,62 @@ export default {
     right:0;
 }
 
-.d-table::v-deep{
-    .el-table__body-wrapper{
-        flex-grow: 100;
+.d-table {
+    ::v-deep{
+        .el-table__body-wrapper{
+            flex-grow: 100;
+        }
+        th.el-table__cell{
+
+            background-image: -webkit-linear-gradient(#fbfbfb, #e9e9e9);
+            color: #6f6f6f;
+           
+            // background-image: -webkit-linear-gradient(#f3f3f3, #e5e5e5);
+            // color:#626262;
+
+            box-shadow: inset 1px 1px 0 rgba(255,255,255 , 0.3);
+            font-weight: bold;
+            text-shadow: 0 1px rgba(255,255,255,.5);
+            padding: 4px 0;
+        }
+        .el-table__header-wrapper{
+            background-image: -webkit-linear-gradient(#fbfbfb, #e9e9e9);
+            // background-image: -webkit-linear-gradient(#f3f3f3, #e5e5e5);
+        }
+
+        // 选中的情况下显示红色
+        .row-select {
+             background-color: #ffe5d2;
+            td:hover{
+                background: #ffe9eb ;
+
+            }
+        }
+        .el-table--striped .el-table__body tr.el-table__row--striped.row-select td{
+            background: #ffe5d2 ;
+        }
+        .el-table--enable-row-hover .el-table__body tr.row-select:hover>td{
+            background: #ffe9eb;
+        }
+
     }
+   
+   
 }
+
+// .d-table{
+//     /deep/{
+//          th.el-table__cell{
+//             background-color: #f4f4f4;
+//         }
+//     }
+// }
+
+// .d-table{
+//     ::v-deep{
+//          th.el-table__cell{
+//             background-color: #f4f4f4;
+//         }
+//     }
+// }
 </style>
