@@ -1,6 +1,6 @@
 <template>
 <!-- com-table-rows com-table-grid -->
-    <div class="d-table" >
+    <div class="d-table grey-head" >
         <el-table class="table flat-head flex-v" ref="e_table"
                               :data="rows"
                                border
@@ -490,8 +490,8 @@ export default {
     bottom: 0;
     right:0;
 }
-
-.d-table {
+// 在html中把grey-head替换为box box-success，就可以会员原来的绿线white head的样式
+.d-table.grey-head {
     ::v-deep{
         .el-table__body-wrapper{
             flex-grow: 100;
@@ -507,7 +507,8 @@ export default {
             box-shadow: inset 1px 1px 0 rgba(255,255,255 , 0.3);
             font-weight: bold;
             text-shadow: 0 1px rgba(255,255,255,.5);
-            padding: 4px 0;
+            padding: 2px 0;
+            line-height: 34px;
         }
         .el-table__header-wrapper{
             background-image: -webkit-linear-gradient(#fbfbfb, #e9e9e9);
@@ -528,6 +529,11 @@ export default {
         .el-table--enable-row-hover .el-table__body tr.row-select:hover>td{
             background: #ffe9eb;
         }
+
+        // 第一列的勾选框，下面有margin，把head行高度顶太高了。
+        // label.el-checkbox{
+        //     margin-bottom: 0;
+        // }
 
     }
    

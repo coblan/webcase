@@ -1,7 +1,7 @@
 <template>
     <div v-if='heads.length>0' class="com-filter flex flex-ac" >
             <com-auto-more org-height="2.8em">
-                <div class="flex" style="flex-wrap: wrap;padding: 0.3em">
+                <div class="flex" style="flex-wrap: wrap;padding: 2px">
                         <div v-for="filter in heads" :key="filter.name" :id="'filter-'+filter.name" class="filter-item" style="margin-bottom: 0.3em">
                             <component @submit="m_submit()" :is="filter.editor" :head="filter" :search_args='searchArgs' > </component>
                         </div>
