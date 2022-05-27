@@ -1,17 +1,17 @@
 <template>
 <!-- com-table-rows com-table-grid -->
-    <div class="d-table grey-head" >
+    <div class="d-table" :class="tableClass">
         <el-table class="table flat-head flex-v" ref="e_table"
                               :data="rows"
                                border
                               show-summary
                               :row-class-name="tableRowClassName"
                               :span-method="arraySpanMethod"
-                              :fit="false"
+                              :fit="fitWidth"
                               :stripe="true"
                               :default-sort='default_sort'
                               size="mini"
-                              height="100%"
+                              :height="myHeight"
                               style="width: 100%"
                               lazy
                                row-key="pk"
@@ -124,6 +124,16 @@ export default {
         footer:{
             default:()=>[]
         },
+        tableClass:{
+            //现在用户控制 th的颜色，展示没对外暴露。
+            default:'grey-head'
+        },
+        autoHeight:{
+            default:false,
+        },
+        fitWidth:{
+            default:()=>false,
+        }
     },
     // mixins: [mix_table_data, mix_ele_table_adapter],
     data(){
@@ -182,6 +192,13 @@ export default {
         // this.loadAdviseInfo()
     },
     computed: {
+        myHeight(){
+            if(this.autoHeight){
+                return undefined
+            }else{
+                return '100%'
+            }
+        },
         default_sort(){
             var sort_str = this.rowSort.sort_str
             if(!sort_str){
@@ -484,11 +501,15 @@ export default {
 </script>
 <style scoped lang='scss'>
 .d-table{
-    position: absolute;
-    top:0;
-    left:0;
-    bottom: 0;
-    right:0;
+    // height: 100%;
+    // position: absolute;
+    // top:0;
+    // left:0;
+    // bottom: 0;
+    // right:0;
+}
+.d-table.autoheight{
+    
 }
 // 在html中把grey-head替换为box box-success，就可以会员原来的绿线white head的样式
 .d-table.grey-head {
