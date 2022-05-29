@@ -22,7 +22,7 @@
             // echartStaticBase,
         },
         props:{
-            data:{},
+            kvList:{},
             title:{},
             subtitle:{},
             option:{},
@@ -33,7 +33,7 @@
             }
         },
         mounted(){
-            this.$refs.chart.draw(this.chart_option)
+            // this.$refs.chart.draw(this.chart_option)
         },
         computed:{
             chart_option(){
@@ -41,22 +41,26 @@
                     title: {
                         text: this.title,
                         subtext: this.subtext,
-                        left: 'center'
+                        left: 'center',
+                        top:'10%'
                     },
                   tooltip: {
                     trigger: 'item'
                   },
-                  // legend: {
-                  //   orient: 'vertical',
-                  //   left: 'left',
-                  // },
+                  legend: {
+                    // orient: 'vertical',
+                    // left:'right',
+                    // right: '5%',
+                    top:'bottom',
+                    align:'left',
+                  },
 
                       series: [
                             {
                             name: '',
                             type: 'pie',
                             radius: '50%',
-                            data: this.data,
+                            data: this.kvList,
 
                             emphasis: {
                                 itemStyle: {
@@ -64,6 +68,12 @@
                                 shadowOffsetX: 0,
                                 shadowColor: 'rgba(0, 0, 0, 0.5)'
                                 }
+                            },
+                            label:{
+                                show:false
+                            },
+                            labelLine:{
+                                show:false
                             }
                             }
                         ]
@@ -80,7 +90,11 @@
                 return myoptions
             }
         },
-   
+        methods:{
+            draw(){
+                this.$refs.chart.draw(this.chart_option)
+            }
+        }
        
     }
 </script>
