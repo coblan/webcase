@@ -49,7 +49,19 @@ export default {
          }
     },
     data(){
+        
+        // var first_sorted_head = this.heads
+
+        this.heads.sort((a,b)=>{
+            if(this.searchArgs[a.name] || this.searchArgs['_start_'+a.name] || this.searchArgs['_end_'+a.name]){ 
+                return -1
+            }else{
+                return 0
+            }
+            })
+
         return {
+            // first_sorted_head:first_sorted_head,
             parStore:ex.vueParStore(this)
             // search_args:this.search_args
         }
@@ -96,9 +108,10 @@ export default {
 
     padding: 2px;
     align-items:center;
+    row-gap: 10px;
 
     .com-item {
-        margin: 2px 2px 2px 0;
+        // margin: 2px 2px 2px 0;
     }
     .spliter{
         height: 16px;

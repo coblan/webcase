@@ -28,7 +28,13 @@ export default {
         }
     },
     data(){
-
+        this.heads.sort((a,b)=>{
+                if(this.searchArgs[a.name] || this.searchArgs['_start_'+a.name] || this.searchArgs['_end_'+a.name]){ 
+                    return -1
+                }else{
+                    return 0
+                }
+            })
         return {
             // search_args:this.search_args
         }
