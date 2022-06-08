@@ -69,11 +69,19 @@ export default{
         }
     },
     mounted(){
-        this.$nextTick(()=>{
-            this.$refs.chart.draw(this.myoption)  
-        })
+        // this.$nextTick(()=>{
+        //     this.$refs.chart.draw(this.myoption)  
+        // })
          
-    }
+    },
+    methods:{ 
+        draw(){
+            this.$nextTick(()=>{
+                this.$refs.chart.draw(this.myoption)  
+            })
+           
+        }
+     }
 }
  
 
