@@ -37,7 +37,7 @@
 import imageCtn from './swiper/imageCtn.vue'
 import cdn from '../cdn.js'
 // if(process.client){
-   var { ref, reactive,computed ,onMounted,getCurrentInstance } = VueCompositionAPI
+   var { ref, reactive,computed ,onMounted,getCurrentInstance } = '@vue/composition-api'
 // }
 
 // import { ref, reactive,computed ,onMounted,getCurrentInstance } from '@vue/composition-api'

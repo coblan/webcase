@@ -22,24 +22,24 @@
             </el-pagination>
         </slot>
 
-      <modalLoading v-show="is_loading"></modalLoading>
+      <loadingMask v-show="is_loading"></loadingMask>
     </div>
 </template>
 
 <script>
-import Vue from 'vue';
-import { Pagination } from 'element-ui';
-Vue.use(Pagination)
-import 'element-ui/lib/theme-chalk/index.css'
-import modalLoading from 'webcase/lit/modalLoading.vue'
-
+// import Vue from 'vue';
+// import { Pagination } from 'element-ui';
+// Vue.use(Pagination)
+// import 'element-ui/lib/theme-chalk/index.css'
+// import modalLoading from 'webcase/lit/modalLoading.vue'
+import loadingMask from 'weblib/uis/loadingMask.vue'
 /*
 *
 * */
 
 export default {
     components:{
-      modalLoading,
+      loadingMask,
       // Pagination
     },
     props:{
