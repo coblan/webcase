@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="admin-login-form">
     <el-form :model="row" :rules="rules" ref="ruleForm" label-width="0" class="real-form bootstrap-style">
       <el-form-item label="" prop="username">
         <el-input prefix-icon="el-icon-user" size="small" placeholder="用户名" v-model="row.username"></el-input>
