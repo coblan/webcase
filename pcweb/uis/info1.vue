@@ -1,10 +1,60 @@
 <template>
-    <div>
-        <div>
+    <div class="info-1">
+      <div class="myinn">
+          <div>
             title
-        </div>
-        <div>
-            wawa
-        </div>
+          </div>
+          <div class="test">
+            wawa生as算工单嘎双嘎双嘎东关爱是嘎双gawawa生as算工单嘎双嘎双嘎东关爱是嘎双ga
+            wawa生as算工单嘎双嘎双嘎东关爱是嘎双gawawa生as算工单嘎双嘎双嘎东关爱是嘎双ga
+            wawa生as算工单嘎双嘎双嘎东关爱是嘎双gawawa生as算工单嘎双嘎双嘎东关爱是嘎双ga
+            wawa生as算工单嘎双嘎双嘎东关爱是嘎双gawawa生as算工单嘎双嘎双嘎东关爱是嘎双ga
+          </div>
+      </div>
     </div>
 </template>
+
+<script>
+import ex from 'weblib/ex'
+
+export default {
+    methods:{
+
+    }
+}
+</script>
+
+<style  lang="scss">
+.info-1{
+    //background-color: purple;
+    // perspective: 1000;
+    // -webkit-perspective: 1000;
+    // -moz-perspective: 1000;
+    // -ms-perspective: 1000;
+
+    //-webkit-transform-style: preserve-3d;
+    //transform-style: preserve-3d;
+    //-webkit-transform: translateZ(500px);
+    //transform: translateZ(500px);
+}
+.blue{
+  background-color: #0096ff;
+  background-image: radial-gradient(circle 280px at center,#0096ff 0,#0096ff 24%,#0492fd 32%,#2372ee 91%,#286dec 100%);
+}
+.myinn{
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform: translateZ(50px);
+  transform: translateZ(50px);
+
+//   -webkit-perspective: 1000;
+//   perspective: 1000;
+
+//   -webkit-perspective: 800px;
+//   perspective: 800px;
+
+   
+    color: #fff;
+ 
+}
+</style>
