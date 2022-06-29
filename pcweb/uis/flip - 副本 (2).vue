@@ -1,24 +1,22 @@
 <template>
 <!-- ontouchstart="this.classList.toggle('hover');" -->
-    <div class="flip-container" >
-        <div class="flipper" :class="type">
-            <div class="front ">
+<!--    <div class="flip-container" >-->
+        <div class="flipper">
+            <div class="front blue">
                 <!-- 前面内容 -->
                 <slot name="front">前面</slot>
             </div>
-            <div class="back">
+            <div class="back blue">
                 <slot name="back">后面</slot>
                 <!-- 背面内容 -->
             </div>
         </div>
-    </div>
+<!--    </div>-->
 </template>
 <script>
 export default {
     props:{
-      type:{
 
-      }
     }
 }
 </script>
@@ -33,10 +31,17 @@ export default {
     -ms-perspective: 1000;
     // transform-style: preserve-3d;
 }
+.flipper{
+  perspective: 1000;
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -ms-perspective: 1000;
+}
+
 	/* flip the pane when hovered */
-	.flip-container:hover .flipper, .flip-container.hover .flipper {
-		transform: rotateY(180deg);
-	}
+	//.flip-container:hover .flipper, .flip-container.hover .flipper {
+	//	transform: rotateY(180deg);
+	//}
     //.flipper{
     //    transform: rotateY(40deg);
     //
@@ -46,27 +51,18 @@ export default {
   background-color: #0096ff;
   background-image: radial-gradient(circle 280px at center,#0096ff 0,#0096ff 24%,#0492fd 32%,#2372ee 91%,#286dec 100%);
 }
-.orange{
-  background-color: #ff784e;
-  background-image: radial-gradient(circle 280px at center,#ff784e 0,#ff784e 24%,#ff764e 32%,#ff664e 91%,#ff644e 100%);
-}
-.purple{
-  background-color: #8787fb;
-  background-image: radial-gradient(circle 280px at center,#8787fb 0,#8787fb 23%,#8484fb 32%,#7272f7 91%,#6f6ff7 100%);
-}
-.red{
-  background-color: #fc4e35;
-  background-image: radial-gradient(circle 280px at center,#fc4e35 0,#fc4e35 24%,#fc4b36 32%,#ff313a 91%,#ff2d3b 100%);
-}
-.front{
-  transform: translateZ(40px);
+.flipper:hover{
+  .front{
+    transform: rotateY(180deg) translateZ(50px);
+  }
+
 }
 
 //.back {
 //  transform: rotateY(180deg);
 //}
 .back{
-  transform: rotateY(180deg) translateZ(40px);
+  transform: rotateY(180deg) translateZ(50px);
 }
 // .flip-container{
 	// width: 320px;
@@ -89,10 +85,9 @@ export default {
 	transition: 1s;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
-	position: relative;
+	  position: relative;
     width: 100%;
     height: 100%;
-  box-shadow: 0 12px 21px #7889b6;
     // transform: rotateY(180deg);
 }
 

@@ -37,10 +37,7 @@ export default {
     //-webkit-transform: translateZ(500px);
     //transform: translateZ(500px);
 }
-.blue{
-  background-color: #0096ff;
-  background-image: radial-gradient(circle 280px at center,#0096ff 0,#0096ff 24%,#0492fd 32%,#2372ee 91%,#286dec 100%);
-}
+
 .myinn{
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
