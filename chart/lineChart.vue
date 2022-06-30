@@ -22,6 +22,7 @@
             xData:{},
             yData:{},
             title:{},
+            subtitle:{},
 
         },
         mounted(){
@@ -42,14 +43,16 @@
               var myoptions = {
                     title: {
                         text: this.title,
+                        subtext: this.subtitle,
                         left: 'center',
-                        top:'10%'
+                        // top:'10%'
                     },
                       legend: {
                         show:true,
                         top:  'bottom',
                         left: 'center',
                     },
+            
                      xAxis: {
                         type: 'category',
                         data: self.xData

@@ -27,7 +27,7 @@ import echartStaticBase from './echartStaticBase.vue'
             my_option(){
                 let myoptions =  {
                       title: {
-                          text: this.title
+                          text: this.title,
                       },
                       tooltip: {
                         trigger: 'item'

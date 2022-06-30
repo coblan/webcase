@@ -40,9 +40,9 @@
               var myoptions = {
                     title: {
                         text: this.title,
-                        subtext: this.subtext,
+                        subtext: this.subtitle,
                         left: 'center',
-                        top:'10%'
+                        // top:'10%'
                     },
                   tooltip: {
                     trigger: 'item'
