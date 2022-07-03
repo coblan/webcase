@@ -2,7 +2,7 @@
 <!-- ontouchstart="this.classList.toggle('hover');" -->
     <div class="flip-container" >
         <div class="flipper" :class="type">
-            <div class="front ">
+            <div class="front">
                 <!-- 前面内容 -->
                 <slot name="front">前面</slot>
             </div>
@@ -19,28 +19,45 @@ export default {
       type:{
 
       }
-    }
+    },
+    // mounted(){
+    //   setTimeout(()=>{
+    //     this.$el.querySelector('.added').classList.add('back')
+    //   },100)
+    //
+    // }
 }
 </script>
 
 
-<style  lang="scss">
+<style scoped  lang="scss">
 /* entire container, keeps perspective */
 .flip-container {
 	  perspective: 1000;
     -webkit-perspective: 1000;
     -moz-perspective: 1000;
     -ms-perspective: 1000;
-    // transform-style: preserve-3d;
 }
+.flipper {
+  transition: .8s;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 12px 20px #7889b6;
+   //transform: rotateY(180deg);
+}
+
 	/* flip the pane when hovered */
-	.flip-container:hover .flipper, .flip-container.hover .flipper {
-		transform: rotateY(180deg);
+	.flip-container:hover .flipper{
+		transform: translate3d( 0, 0, 0) rotateY(180deg);
+
 	}
-    //.flipper{
-    //    transform: rotateY(40deg);
-    //
-    //}
+
+  //.flipper{
+  //    transform: rotateY(100deg);
+  //}
 
 .blue{
   background-color: #0096ff;
@@ -58,15 +75,16 @@ export default {
   background-color: #fc4e35;
   background-image: radial-gradient(circle 280px at center,#fc4e35 0,#fc4e35 24%,#fc4b36 32%,#ff313a 91%,#ff2d3b 100%);
 }
+
 .front{
-  transform: translateZ(40px);
+  transform: translateZ(40px) scale(0.94);
 }
 
 //.back {
 //  transform: rotateY(180deg);
 //}
 .back{
-  transform: rotateY(180deg) translateZ(40px);
+  transform: rotateY(180deg) translateZ(40px) scale(0.94);
 }
 // .flip-container{
 	// width: 320px;
@@ -85,28 +103,19 @@ export default {
 
 
 /* flip speed goes here */
-.flipper {
-	transition: 1s;
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-	position: relative;
-    width: 100%;
-    height: 100%;
-  box-shadow: 0 12px 21px #7889b6;
-    // transform: rotateY(180deg);
-}
+
 
 
 /* hide back of pane during swap */
 .front, .back {
 	backface-visibility: hidden;
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 	position: absolute;
 	top: 0;
 	left: 0;
-    right: 0;
-    bottom: 0;
+  right: 0;
+  bottom: 0;
 
 }
 

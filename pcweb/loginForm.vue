@@ -17,9 +17,12 @@
       <el-checkbox v-model="row.auto_login"></el-checkbox> <span class="auto-log-text">下次自动登录</span>
     </el-form>
 
-    <div class="dark-blue">
-      <el-button  size="small" type="primary"  style="width: 100%" @click="submit()">登录</el-button>
-    </div>
+    <slot name="buttons">
+      <div class="dark-blue">
+        <el-button  size="small" type="primary"  style="width: 100%" @click="submit()">登录</el-button>
+      </div>
+    </slot>
+
   </div>
 
 </template>
