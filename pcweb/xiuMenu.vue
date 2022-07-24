@@ -10,7 +10,7 @@
                 <div class="menu">
                     <div class="action"  v-for="action in menu" :key='action.name'>
                         <a v-if="action.url"  :class="{'active':is_active(action)}" :href="action.url" v-text="action.label"></a>
-                        <a v-else :class="{'active':is_active(action)}"  href="#" @click="on_click(action)" v-text="action.label"></a>
+                        <a v-else :class="{'active':is_active(action)}"   @click="on_click(action)" v-text="action.label"></a>
                     </div>
                 </div>
                 <div class="right-ops">
@@ -91,6 +91,7 @@ import ex from 'webcase/director/exfun/main.js'
     text-align right
     flex-grow 100
     .action
+      cursor pointer
       display inline-block
       padding 0 20px
       font-size 18px

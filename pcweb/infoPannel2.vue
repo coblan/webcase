@@ -16,6 +16,7 @@
 <script>
 import cdn from 'weblib/cdn'
 import imageDiv from 'weblib/uis/imageDiv.vue'
+import animate from 'weblib/ex/animate.js'
 export default {
     /**
      * 动画用了Velocity.js ,Velocity.js又使用了jquery，现在暂时这样，如果未来移除了jquery，这个组件需要作出修改。
@@ -35,23 +36,51 @@ export default {
     },
     methods:{
         on_enter(name){
-            $( this.$el.querySelector('[name='+name+']')).velocity('stop')
-                .velocity({
-                scaleX:1.1,
-                scaleY:1.1,
-            },{
-                duration:2000,
-                delay:200,
-            });
+            var dm = this.$el.querySelector('[name='+name+']')
+             animate.velocityCall(async ()=>{ 
+                await Velocity(dm,"stop",true)
+                    Velocity(dm,{    
+                         scaleX:1.1,
+                        scaleY:1.1,
+                    },{
+                        duration:2000,
+                         delay:200,
+                         easing: "easeInOutQuad",
+                    })
+
+             })
+           
+            // $( this.$el.querySelector('[name='+name+']')).velocity('stop')
+            //     .velocity({
+            //     scaleX:1.1,
+            //     scaleY:1.1,
+            // },{
+            //     duration:2000,
+            //     delay:200,
+            // });
         },
         on_leave(name){
-            $(this.$el).find('[name='+name+']').velocity('stop')
-                .velocity({
-                scaleX:1,
-                scaleY:1,
-            },{
-                duration:1000,
-            }  );
+            
+            var dm = this.$el.querySelector('[name='+name+']')
+            animate.velocityCall(async ()=>{ 
+               await Velocity(dm,"stop",true)
+                Velocity(dm,{    
+                        scaleX:1,
+                    scaleY:1,
+                },{
+                    duration:1000,
+                    easing: "easeInOutQuad",
+                })
+            })
+
+            // $( this.$el.querySelector('[name='+name+']')).velocity('stop')
+            //     .velocity({
+            //     scaleX:1,
+            //     scaleY:1,
+            // },{
+            //     duration:1000, 
+            // });
+
         }
     }
 }
