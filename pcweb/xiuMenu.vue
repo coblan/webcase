@@ -40,7 +40,8 @@ import ex from 'webcase/director/exfun/main.js'
         },
         data(){
             return {
-                parStore:ex.vueParStore(this)
+                parStore:ex.vueParStore(this),
+                innActiveName:this.activeName,
             }
         },
         mounted(){
@@ -55,8 +56,8 @@ import ex from 'webcase/director/exfun/main.js'
 
             },
             is_active:function(action){
-                  if(this.activeName){
-                    return action.name==this.activeName
+                  if(this.innActiveName){
+                    return action.name==this.innActiveName
                   }else{
                     return false
                   }
