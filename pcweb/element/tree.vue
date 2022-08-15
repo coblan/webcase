@@ -50,7 +50,6 @@
    },
     methods: {
       handleNodeClick(data) {
-        debugger
         console.log(data);
         this.$emit('node-click',data)
       },
