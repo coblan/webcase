@@ -264,10 +264,12 @@ export default {
     },
     methods:{
         loadChildren(tree, treeNode, resolve){
-            var director_name = tree._director_name.split('.')[0]
+            var director_name = tree._director_name.replace(/\.edit$/,'')
             var search_args = {par:tree.pk}
             ex.vueAssign(search_args,this.parStore.search_args)
             ex.director_call('d.get_rows',{director_name:director_name,search_args:search_args }).then(resp=>{
+              // 可以考虑增加更多按钮
+              // resp.rows.push({content:'更多',pk:12323456})
                 resolve(resp.rows)
             })
             this.node_map[tree.id] = {tree, treeNode, resolve}
