@@ -9,6 +9,7 @@
     </div>
 
     <el-tree :data="options" :props="defaultProps"
+             node-key="value"
              :expand-on-click-node="false"
              :filter-node-method="filterNode"
              :highlight-current="true"
@@ -49,6 +50,12 @@
      }
    },
     methods: {
+     clear(){
+       // var node =  this.$refs.tree.getCurrentNode()
+       // node.isCurrent = false
+       // this.$refs.tree.setCurrentNode([])
+       //  this.$refs.tree.setCurrentKey([])
+     },
       handleNodeClick(data) {
         console.log(data);
         this.$emit('node-click',data)
