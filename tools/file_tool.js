@@ -1,4 +1,5 @@
 class LocalVideo {
+    // 从本地读取视频文件，并且生成截图，meta信息等。
   constructor(file){
     var url = URL.createObjectURL(file)
     this. videoElement = document.createElement('video');
@@ -145,12 +146,15 @@ var file_tool =   {
         /**
          * option={start=0,end=5*1024*1024} 文件的起始和终止
          * file是input选择的文件
+         *
+         * 返回arrayBuffer类型
          */
 
         return new Promise((resolve,reject)=>{
             var reader = new FileReader()
-            if (option.start){
-              reader.readAsArrayBuffer(file.slice(option.start,option.end));
+            if (option.end){
+                var start = option.start || 0
+              reader.readAsArrayBuffer(file.slice(start,option.end));
             }else{
               reader.readAsArrayBuffer(file);
             }
