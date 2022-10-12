@@ -6,6 +6,7 @@
 <script>
 // import echartStaticBase from './echartStaticBase.vue'
  import  echartsDiv from 'weblib/uis/echartsDiv.vue'
+import ex from '../director/exfun/main'
 
 /**
  * data:[
@@ -26,6 +27,8 @@
             title:{},
             subtitle:{},
             option:{},
+            seriesOption:{},
+            
         },
         data(){
             return {
@@ -86,6 +89,14 @@
                        myoptions[k] = this.option[k]
                      }
                    }
+                }
+                // if(this.option){
+                //     ex.vueAssign(myoptions,this.option)
+                // }
+                if(this.seriesOption){
+                    ex.each(myoptions.series,item=>{
+                        ex.vueAssign(item,this.seriesOption)
+                    })
                 }
                 return myoptions
             }
