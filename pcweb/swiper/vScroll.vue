@@ -53,6 +53,9 @@ export default {
         },
         loop:{
             default:true,
+        },
+        spaceBetween:{
+            default:10
         }
     //   direction: {
     //       default:"horizontal",//"vertical"
@@ -85,7 +88,7 @@ export default {
              
 	            // speed: 3000,
                 // freeMode: true,
-                spaceBetween: 10,
+                spaceBetween:  this.spaceBetween, // 10,
                 // effect: 'fade',
                 loop: this.loop,
                 autoplay: {
