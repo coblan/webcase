@@ -104,7 +104,10 @@ import ex from '../director/exfun/main'
         methods:{
             draw(){
                 this.$refs.chart.draw(this.chart_option)
-            }
+            },
+           clear(){
+            return  this.$refs.chart.clear();
+          }
         }
        
     }
