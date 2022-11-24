@@ -1,11 +1,8 @@
 <template>
     <div v-if='heads.length>0' class="com-filter flex flex-ac" >
             <com-auto-more org-height="2.8em">
-                
-           
                 <div class="com-wrap">
-
-                    <component class="com-item" v-for="(op,index) in opHeads"
+                    <component class="com-item" v-for="(op,index) in bus_operations"
                         :is="op.editor"
                         :ref="'op_'+op.name"
                         :head="op"
@@ -13,6 +10,16 @@
                         :key="index"
                         :disabled="is_disable(op)"
                         v-show="is_show(op)"></component>
+                  <el-button-group>
+                    <component class="com-item" v-for="(op,index) in utility_operation"
+                               :is="op.editor"
+                               :ref="'op_'+op.name"
+                               :head="op"
+                               :ctx="op"
+                               :key="index"
+                               :disabled="is_disable(op)"
+                               v-show="is_show(op)"></component>
+                  </el-button-group>
 
                         <div class="com-item spliter" v-if="opHeads.length>0 && heads.length>0"> </div>
 
@@ -70,6 +77,18 @@ export default {
         // search_args(v){
         //     this.$emit('update:searchArgs',v)
         // }
+    },
+    computed:{
+        bus_operations(){
+          return ex.filter(this.opHeads,item=>{
+            return ! item.utility
+          })
+        },
+      utility_operation(){
+        return ex.filter(this.opHeads,item=>{
+          return item.utility
+        })
+      }
     },
     methods:{
         m_submit(){
