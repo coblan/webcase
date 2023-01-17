@@ -171,6 +171,71 @@ var file_tool =   {
         await ex.load_js('https://lib.baomitu.com/md5-wasm/1.2.0/md5-wasm.min.js')
         return await window.md5WASM(data)
     },
+    async sliceUpload(upload_url, file,merge_url,{slice_size=1*1024*1024,process_handler,file_name}={}){
+        var file_length = file.size
+        var slice_list =[]
+        var _current_index = 0
+        var count = 0
+        while (true){
+            var this_last_index= Math.min( _current_index + slice_size ,file_length)
+            slice_list.push({start:_current_index,end:this_last_index,index:count})
+            count +=1
+            if(this_last_index >= file_length){
+                break
+            }
+            _current_index = this_last_index
+        }
+
+        var _upload =async (item) =>{
+            var dd = await this.read_file(file,{start:item.start,end:item.end})
+            var name =  await this.file_md5(dd)
+            var file_blob = new Blob([dd]);
+            var resp = await ex.uploadFile(upload_url,file_blob,{process_handler:process_handler,file_name:name})
+            var out_list = []
+            out_list.push( {index:item.index, url : resp.data[0] } )
+            if(slice_list.length >0){
+                var url_list = await _upload(slice_list.pop())
+                out_list =  out_list.concat(url_list)
+                return  out_list
+            }else{
+                return out_list
+            }
+        }
+
+        var promis_list = []
+        for(var i=0;i<=3;i++){
+            var item = slice_list.pop()
+             var pp  = _upload(item)
+            promis_list.push(pp)
+        }
+        var uploaded_list  =  await  Promise.all(promis_list)
+        var all_file_dict =[]
+        ex.each(uploaded_list,item_list =>{
+            all_file_dict = all_file_dict.concat(item_list)
+        })
+        all_file_dict = all_file_dict.sort( (a,b) =>  b.index - a.index  )
+        var all_file = ex.map(all_file_dict,ii => ii.url)
+
+        return all_file
+
+
+
+        // var _current_thread = 0
+        // ex.each( slice_list,item=>{
+        //     if(_current_thread <=3){
+        //         var dd = this.read_file(file,{start:})
+        //         ex.uploadFile(upload_url,file,{process_handler:process_handler,file_name:file_name}).then((resp)=>{
+        //             _current_thread -=1
+        //         })
+        //     }
+        //
+        // } )
+        //
+        //
+        // var resp = await ex.uploadFile(upload_url,file,{process_handler:process_handler,file_name:file_name})
+
+    }
+
 }
 
 export default file_tool
