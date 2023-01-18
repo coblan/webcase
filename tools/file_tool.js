@@ -171,7 +171,7 @@ var file_tool =   {
         await ex.load_js('https://lib.baomitu.com/md5-wasm/1.2.0/md5-wasm.min.js')
         return await window.md5WASM(data)
     },
-    async sliceUpload(upload_url, file,merge_url,{slice_size=1*1024*1024,process_handler,file_name}={}){
+    async sliceUpload(upload_url, file,{slice_size=20*1024*1024,process_handler,file_name}={}){
         var file_length = file.size
         var slice_list =[]
         var _current_index = 0
@@ -185,12 +185,15 @@ var file_tool =   {
             }
             _current_index = this_last_index
         }
-
+        var total_length = slice_list.length
+        var loaded = 0
         var _upload =async (item) =>{
             var dd = await this.read_file(file,{start:item.start,end:item.end})
             var name =  await this.file_md5(dd)
             var file_blob = new Blob([dd]);
-            var resp = await ex.uploadFile(upload_url,file_blob,{process_handler:process_handler,file_name:name})
+            var resp = await ex.uploadFile(upload_url,file_blob,{file_name:name})
+            loaded += 1
+            process_handler({loaded:loaded,total:total_length})
             var out_list = []
             out_list.push( {index:item.index, url : resp.data[0] } )
             if(slice_list.length >0){
@@ -213,8 +216,10 @@ var file_tool =   {
         ex.each(uploaded_list,item_list =>{
             all_file_dict = all_file_dict.concat(item_list)
         })
-        all_file_dict = all_file_dict.sort( (a,b) =>  b.index - a.index  )
+        all_file_dict = all_file_dict.sort( (a,b) =>   a.index -b.index )
         var all_file = ex.map(all_file_dict,ii => ii.url)
+
+        // process_handler({loaded:})
 
         return all_file
 
