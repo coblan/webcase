@@ -171,7 +171,7 @@ var file_tool =   {
         await ex.load_js('https://lib.baomitu.com/md5-wasm/1.2.0/md5-wasm.min.js')
         return await window.md5WASM(data)
     },
-    async sliceUpload(upload_url, file,{slice_size=20*1024*1024,process_handler,file_name}={}){
+    async sliceUpload(upload_url, file,{slice_size=20*1024*1024,process_handler,file_name,thread=3}={}){
         var file_length = file.size
         var slice_list =[]
         var _current_index = 0
@@ -206,11 +206,22 @@ var file_tool =   {
         }
 
         var promis_list = []
-        for(var i=0;i<=3;i++){
-            var item = slice_list.pop()
-             var pp  = _upload(item)
-            promis_list.push(pp)
+        var thread_count =0
+        while ( thread_count <= thread){
+            if(slice_list.length >0){
+                var item = slice_list.pop()
+                var pp  = _upload(item)
+                promis_list.push(pp)
+            }else{
+                break
+            }
         }
+
+        // for(var i=0;i<=3;i++){
+        //     var item = slice_list.pop()
+        //      var pp  = _upload(item)
+        //     promis_list.push(pp)
+        // }
         var uploaded_list  =  await  Promise.all(promis_list)
         var all_file_dict =[]
         ex.each(uploaded_list,item_list =>{
