@@ -515,11 +515,16 @@ export default {
 }
 // 在html中把grey-head替换为box box-success，就可以会员原来的绿线white head的样式
 .d-table.grey-head {
+  
     ::v-deep{
         .el-table__body-wrapper{
             flex-grow: 100;
         }
         th.el-table__cell{
+            .cell{
+                white-space: nowrap;
+            }
+           
 
             background-image: -webkit-linear-gradient(#fbfbfb, #e9e9e9);
             color: #6f6f6f;
