@@ -12,6 +12,9 @@
             x:{},
             y:{},
             title:{},
+            barMaxWidth:{
+                default:30
+            }
         },
         data(){
             return {
@@ -29,6 +32,12 @@
                       left: 'center',
                       top:'10%'
                     },
+                    tooltip: {
+                      trigger: 'axis',
+                      axisPointer: {
+                        type: 'shadow'
+                      }
+                    },
                     xAxis: {
                         type: 'category',
                         data: this.x ,//  ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -41,7 +50,7 @@
                       bottom:'16%',
                       // top:'30%'
                     },
-                    barMaxWidth:30,
+                    barMaxWidth:this.barMaxWidth,
                     series: [
                         {
                         data: this.y, // [120, 200, 150, 80, 70, 110, 130],
