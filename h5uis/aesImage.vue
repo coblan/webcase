@@ -37,18 +37,20 @@ function blobToArrayBuffer(blob){
     var fileReader = new FileReader();
     fileReader.onload = function(event) {
         arrayBuffer = event.target.result;
-        pro.resolve(arrayBuffer)
+        // pro.resolve(arrayBuffer)
+        pro.resolve(fileReader.result)
     };
     fileReader.readAsArrayBuffer(blob);
     return pro.promise
 }
 async function Decrypt(data,key) {
     debugger
-    var buf = await  blobToArrayBuffer(data)
+    var arrayBuffer = await  blobToArrayBuffer(data)
+    var wordArray = CryptoJS.lib.WordArray.create(arrayBuffer);
     var AES_KEY = CryptoJS.enc.Utf8.parse(key);
-        let decrypt = CryptoJS.AES.decrypt(buf, AES_KEY, {  mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 });
-        debugger
-        return decrypt;
+    let decrypt = CryptoJS.AES.decrypt(wordArray, AES_KEY, {  mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 });
+   debugger
+    return decrypt;
 }
 
 function blobToDataURL(blob, callback) {
