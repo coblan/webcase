@@ -45,7 +45,7 @@ function blobToArrayBuffer(blob){
 }
 async function Decrypt(data,key) {
     debugger
-    var arrayBuffer = await  blobToArrayBuffer(data)
+    var arrayBuffer =  await data.arrayBuffer()  // await  blobToArrayBuffer(data)
     var wordArray = CryptoJS.lib.WordArray.create(arrayBuffer);
     var AES_KEY = CryptoJS.enc.Utf8.parse(key);
     let decrypt = CryptoJS.AES.decrypt(wordArray, AES_KEY, {  mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 });
