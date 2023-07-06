@@ -13,7 +13,7 @@ export default{
     },
     watch:{
         real_src(nv){
-            // this.$emit('real_src',nv)
+            this.$emit('imageSrc',nv)
             this.$emit('update:imageSrc',nv)
         },
       src(nv){
