@@ -22,10 +22,14 @@ class LocalVideo {
     var resp = await this.meta.promise
     return resp
   }
-  async screenShot(option={currentTime:3,upload_path:'/d/upload?path=general_upload/images&split=month',maxspan:1000}){
-   
+  async screenShot({currentTime=3,upload_path='/d/upload?path=general_upload/images&split=month',maxspan=1000}={}){
+   /*
+   *currentTime:3 ,// 截取3秒的截图
+   * maxspan：1000,  // 截取画面最大分辨率。本地截取
+   * upload_path:'' , // 上传地址
+   * */
     var videoElement = this.videoElement
-        videoElement.currentTime = option.currentTime
+        videoElement.currentTime = currentTime
         videoElement.crossorigin="anonymous"
         cfg.show_load('获取截图...')
         await this.canplay.promise
@@ -33,8 +37,8 @@ class LocalVideo {
         var canvas = document.createElement("canvas");
         // var canvas = self.$el.querySelector('.myCanvas')
         var max = Math.max(videoElement.videoWidth,videoElement.videoHeight)
-        if(max >option. maxspan){
-          var scale = option.maxspan / max
+        if(max > maxspan){
+          var scale = maxspan / max
         }else{
           var scale = 1
         }
@@ -55,7 +59,7 @@ class LocalVideo {
         }else{
           var real = formData
         }
-        var resp = await  ex.uploadFormData(real,option.upload_path)
+        var resp = await  ex.uploadFormData(real,upload_path)
         cfg.hide_load()
         return resp.data[0]
 
@@ -107,7 +111,7 @@ var file_tool =   {
              cfg.hide_load()
              pro.resolve(resp.data[0])
            })
-      
+
           // var img=new Image();
           // img.crossOrigin="anonymous"
           // var img = self.$el.querySelector('.myimg')
