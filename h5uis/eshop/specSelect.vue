@@ -93,6 +93,7 @@ export default{
 .my-kind{
   display: flex;
   align-items: center;
+  margin: 20px 0;
   .my-btn{
     padding: 5px 10px;
     border: 1px solid grey;

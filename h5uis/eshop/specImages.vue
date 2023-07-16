@@ -1,6 +1,6 @@
 <template>
     <div>
-        <imageDiv :src="current_image" alt="" style="width: 400px;height: 400px;"></imageDiv>
+        <imageDiv class="image-show" :src="current_image" alt="" style=""></imageDiv>
 
       <div class="container">
         <div class="image-container"  v-for="src in images" :class="{active:current_image==src}">
@@ -18,16 +18,23 @@ export default {
       
     },
     props:{
-        images:{}
+        images:{},
+    
     },
     data(){
-        if(this.images){
-            var current_image = this.images[0]
-        }else{
-            var current_image = ''
-        }
+     
         return {
-            current_image: current_image
+            current_image: ''
+        }
+    },
+    watch:{
+        images(){
+            if(this.images){
+                 var current_image = this.images[0]
+            }else{
+                 var current_image = ''
+            }
+            this.current_image = current_image
         }
     },
     mounted(){
@@ -45,7 +52,7 @@ export default {
 .container{
     display: flex;
     gap: 10px;
-    padding: 10px;
+    padding: 20px 0;
 }
 .image-container{
     width: 60px;
@@ -56,5 +63,9 @@ export default {
     &.active{
         border: 1.5px solid red;
     }
+}
+.image-show{
+     width: 400px;
+     height: 400px;
 }
 </style>
