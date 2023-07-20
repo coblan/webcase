@@ -2,20 +2,31 @@
     <div>
         <imageDiv class="image-show" :src="current_image" alt="" style=""></imageDiv>
 
-      <div class="container">
-        <div class="image-container"  v-for="src in images" :class="{active:current_image==src}">
+ 
+        <!-- <div class="image-container"  v-for="src in images" :class="{active:current_image==src}">
             <imageDiv @mouseenter.native="onSelect(src)"  @click.native="onSelect(src)" :src="src"  style="width:100%;height: 100%;"></imageDiv>
-        </div>
-      </div>
+        </div> -->
+        <arrowPage :rows="images">
+            <template v-slot:content="slotprops">
+                <div class="container">
+                        <div class="image-container"  v-for="src in slotprops.current_rows" :class="{active:current_image==src}">
+                        <imageDiv @mouseenter.native="onSelect(src)"  @click.native="onSelect(src)" :src="src"  style="width:100%;height: 100%;"></imageDiv>
+                    </div>
+                </div>
+            </template>
+              
+         </arrowPage> 
+   
 
     </div>
 </template>
 <script>
 import imageDiv from 'weblib/uis/imageDiv.vue'
+import arrowPage from 'webcase/pcweb/uis/arrowPage.vue'
 export default {
     components:{
         imageDiv,
-      
+        arrowPage
     },
     props:{
         images:{},
@@ -54,6 +65,7 @@ export default {
     gap: 10px;
     padding: 20px 0;
 }
+
 .image-container{
     width: 60px;
     height: 60px;
@@ -64,6 +76,8 @@ export default {
         border: 1.5px solid red;
     }
 }
+
+
 .image-show{
      width: 400px;
      height: 400px;
