@@ -1,6 +1,6 @@
 <template>
     <div>
-        <imageDiv class="image-show" :src="current_image" alt="" style=""></imageDiv>
+        <imageDiv class="image-show" :src="current_image" alt="" type="contain"></imageDiv>
 
  
         <!-- <div class="image-container"  v-for="src in images" :class="{active:current_image==src}">
@@ -10,7 +10,8 @@
             <template v-slot:content="slotprops">
                 <div class="container">
                         <div class="image-container"  v-for="src in slotprops.current_rows" :class="{active:current_image==src}">
-                        <imageDiv @mouseenter.native="onSelect(src)"  @click.native="onSelect(src)" :src="src"  style="width:100%;height: 100%;"></imageDiv>
+                        <imageDiv @mouseenter.native="onSelect(src)"  
+                        @click.native="onSelect(src)" :src="src"  style="width:100%;height: 100%;"></imageDiv>
                     </div>
                 </div>
             </template>
