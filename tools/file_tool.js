@@ -176,7 +176,7 @@ var file_tool =   {
         return await window.md5WASM(data)
     },
     async sliceUpload(upload_url, file,{slice_size=20*1024*1024,process_handler,file_name,thread=3}={}){
-        var file_length = file.size
+      var file_length = file.size
         var slice_list =[]
         var _current_index = 0
         var count = 0
@@ -195,6 +195,7 @@ var file_tool =   {
             var dd = await this.read_file(file,{start:item.start,end:item.end})
             var name =  await this.file_md5(dd)
             var file_blob = new Blob([dd]);
+            debugger
             var resp = await ex.uploadFile(upload_url,file_blob,{file_name:name})
             loaded += 1
             process_handler({loaded:loaded,total:total_length})
