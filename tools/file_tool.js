@@ -22,7 +22,7 @@ class LocalVideo {
     var resp = await this.meta.promise
     return resp
   }
-  async screenShot({currentTime=3,upload_path='/d/upload?path=general_upload/images&split=month',maxspan=1000}={}){
+  async screenShot({currentTime=3,upload_path='/d/upload?path=general_upload/images&split=month',maxspan=1000,file_name='file'}={}){
    /*
    *currentTime:3 ,// 截取3秒的截图
    * maxspan：1000,  // 截取画面最大分辨率。本地截取
@@ -52,7 +52,7 @@ class LocalVideo {
     
         // formData.append('auth', state.token.auth); 可以选择性的加入一些鉴权
     
-        formData.append('file', blob);
+        formData.append('file', blob,file_name);
         cfg.show_load("上传截图...")
         if(formData.fd){
           var real = formData.fd
