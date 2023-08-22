@@ -255,6 +255,15 @@ var file_tool =   {
         //
         // var resp = await ex.uploadFile(upload_url,file,{process_handler:process_handler,file_name:file_name})
 
+    },
+
+    fileName(url){
+      var mt = /[^\/]+$/.exec(url)
+      if(mt){
+        return mt[0]
+      }else{
+        return null
+      }
     }
 
 }
