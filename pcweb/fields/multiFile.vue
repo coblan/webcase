@@ -24,7 +24,7 @@
       </div>
   
       <file-input v-if="!head.readonly" style="display: none"  v-model='img_files'
-                  accept='image/*'  multiple></file-input>
+                  :accept='head.accept'  multiple></file-input>
     </div>
   </template>
   <script>
@@ -109,7 +109,6 @@
         })
       },
       remove_image:function(index){
-        debugger
        var image_list = this.row[this.head.name]
         image_list.splice(index,1)
         Vue.set(this.row,this.head.name,image_list)
