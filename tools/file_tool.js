@@ -175,7 +175,7 @@ var file_tool =   {
         await ex.load_js('https://lib.baomitu.com/md5-wasm/1.2.0/md5-wasm.min.js')
         return await window.md5WASM(data)
     },
-    async sliceUpload(upload_url, file,{slice_size=20*1024*1024,process_handler,file_name,thread=3}={}){
+    async sliceUpload(upload_url, file,{slice_size=10*1024*1024,process_handler,file_name,thread=3}={}){
       var file_length = file.size
         var slice_list =[]
         var _current_index = 0
