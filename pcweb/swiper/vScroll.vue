@@ -56,6 +56,9 @@ export default {
         },
         spaceBetween:{
             default:10
+        },
+        mouseStop:{
+            default:true
         }
     //   direction: {
     //       default:"horizontal",//"vertical"
@@ -71,9 +74,9 @@ export default {
         }
     },
     mounted(){
-        // Vue.nextTick(()=>{
-        //     this.init()
-        // })
+        
+        
+
     },
     computed:{
     },
@@ -82,7 +85,7 @@ export default {
             ex.load_css(cfg.js_lib.swiper_css)
             await ex.load_js(cfg.js_lib.swiper)
             var self =this
-            var swiper = new Swiper(this.$el.querySelector('.swiper-container'), {
+            var mySwiper = new Swiper(this.$el.querySelector('.swiper-container'), {
                 direction: "vertical",
                 slidesPerView: this.slidesPerView ,
              
@@ -112,6 +115,17 @@ export default {
                 //     },
                 // },
             });
+
+            if(this.mouseStop){
+                mySwiper.el.onmouseover = function(){ //鼠标放上暂停轮播
+                    mySwiper.autoplay.stop();
+                }
+                mySwiper.el.onmouseleave = function(){
+                    mySwiper.autoplay.start();
+                }
+            }
+          
+
         },
         on_click(item){
 
