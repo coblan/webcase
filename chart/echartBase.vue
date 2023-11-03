@@ -6,6 +6,14 @@
 </template>
 <script>
 import cdn from  '../cdn.js'
+
+/**
+ * 现在不用这个组件了，已知feibao的某些图表用了改组件。
+ * 使用下面这个替代
+ * weblib/uis/echartsDiv
+ * 
+ * 
+ */
  
  export default {
      props:{
