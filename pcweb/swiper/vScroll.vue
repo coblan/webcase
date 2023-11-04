@@ -59,6 +59,9 @@ export default {
         },
         mouseStop:{
             default:true
+        },
+        freeSpeed:{
+            default:3000 , // free模式下，滚动速度
         }
     //   direction: {
     //       default:"horizontal",//"vertical"
@@ -85,15 +88,17 @@ export default {
             ex.load_css(cfg.js_lib.swiper_css)
             await ex.load_js(cfg.js_lib.swiper)
             var self =this
-            var mySwiper = new Swiper(this.$el.querySelector('.swiper-container'), {
+            
+            var config = {
                 direction: "vertical",
+             
                 slidesPerView: this.slidesPerView ,
              
 	            // speed: 3000,
                 // freeMode: true,
                 spaceBetween:  this.spaceBetween, // 10,
                 // effect: 'fade',
-                loop: this.loop,
+                loop: self.loop,
                 autoplay: {
                     delay: this.delay ,
                     disableOnInteraction: false,
@@ -114,7 +119,20 @@ export default {
                 //
                 //     },
                 // },
-            });
+            }
+
+            if(this.freeSpeed){
+                Object.assign(config,{
+                    speed:  this.freeSpeed, //  3000,
+                    freeMode: true,
+                     autoplay: {
+                        delay: 0 ,
+                        disableOnInteraction: false,
+                    }
+                })
+            }
+
+            var mySwiper = new Swiper(this.$el.querySelector('.swiper-container'), config);
 
             if(this.mouseStop){
                 mySwiper.el.onmouseover = function(){ //鼠标放上暂停轮播
@@ -199,6 +217,18 @@ export default {
 }
 .swiper-button-prev{
   //left: -50px;
+}
+
+
+::v-deep{
+    .swiper-container-free-mode>.swiper-wrapper { 
+        -webkit-transition-timing-function: linear; /*之前是ease-out*/ 
+        -moz-transition-timing-function: linear; 
+        -ms-transition-timing-function: linear; 
+        -o-transition-timing-function: linear; 
+        transition-timing-function: linear; 
+        margin: 0 auto; 
+    }
 }
 
 </style>
