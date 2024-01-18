@@ -10,7 +10,7 @@
       </thead>
       <tbody>
 
-      <tr v-for="(item, index) in rows" :key="index">
+      <tr v-for="(item, index) in normed_rows" :key="index">
         <td v-if="showSelect">
             <el-checkbox :checked="has_checked(item)" @change="onChange($event, item)"></el-checkbox>
         </td>
@@ -34,12 +34,26 @@ export default{
         selected:{},
         showHead:{
           default: true
-        }
+        },
+        valid_values:{}
     },
     data(){
         return {
             checked:'',
-            inn_selected:this.selected || []
+            inn_selected:this.selected || [],
+            orgin_selectd:ex.copy(this.selected)
+        }
+    },
+    computed:{
+        normed_rows(){
+          if(this.valid_values){
+              return  ex.filter(this.rows,row=>{
+                var selected_ids = ex.map(this.orgin_selectd,item=>item.id)
+                 return  this.valid_values.includes(row.id) || selected_ids.includes(row.id)
+              })
+          }else{
+            return this.rows
+          }
         }
     },
     methods:{
