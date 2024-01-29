@@ -175,7 +175,16 @@ var file_tool =   {
         await ex.load_js('https://lib.baomitu.com/md5-wasm/1.2.0/md5-wasm.min.js')
         return await window.md5WASM(data)
     },
-    async sliceUpload(upload_url, file,{slice_size=10*1024*1024,process_handler,file_name,thread=3}={}){
+    async sliceUpload(upload_url, file,{slice_size=5*1024*1024,process_handler,file_name,thread=3}={}){
+        /*把file指向的文件切成多块，同时上传到服务器
+        * @file: input组件捕获到的文件
+        * @process_handler:进度处理函数
+         var process_handler =(e)=>{
+          let per = parseInt(e.loaded, 10) / parseInt(e.total, 10);
+          per = Number((per * 100).toFixed(2));
+          ps.progress = per
+        }
+        * */
       var file_length = file.size
         var slice_list =[]
         var _current_index = 0
