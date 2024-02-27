@@ -30,7 +30,6 @@ export default{
         async adaptSrc(){
             if(!this.src){return ''}
             var search = ex.parseURL(this.src)
-
           if( search.pathname.endsWith('.aes')){
             await ex.load_js('https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/crypto-js/4.1.1/crypto-js.min.js')
             //   var src = '/media/general_upload/images/2023_04/test_image_pk7_p16.aes'
