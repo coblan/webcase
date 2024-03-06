@@ -1,5 +1,5 @@
 <template>
-    <div class="oprations" style="padding: 5px;overflow: hidden;padding-right: 0">
+    <div class="oprations" style="padding: 5px;overflow: hidden;padding-right: 0;flex-shrink: 0;">
         <component v-for="(op,index) in bus_operations"
                    :is="op.editor"
                    :ref="'op_'+op.name"
