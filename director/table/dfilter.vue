@@ -10,7 +10,8 @@
 
         <button name="go" type="button" class="btn btn-success btn-sm" @click='m_submit()' >
             <i class="fa fa-search"></i>
-            <span v-text="searchLabel"></span>
+<!--            <span >rr</span>-->
+          <span v-text="searchLabel"></span>
         </button>
     </div>
 </template>
@@ -24,7 +25,7 @@ export default {
             default:()=>{ return {}}
         },
         searchLabel:{
-            default:'搜索'
+            default:cfg.tr('搜索')
         }
     },
     data(){
